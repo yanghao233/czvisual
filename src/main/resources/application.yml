@@ -1,0 +1,14 @@
+# 配置 MySQL
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.2.10:3306/czvisual?serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# 配置 MyBatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.czvisual.entity
+  configuration:
+    map-underscore-to-camel-case: true
