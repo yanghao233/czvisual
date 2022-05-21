@@ -1,7 +1,14 @@
-# 配置 MySQL
 spring:
+  # 关闭thymeleaf缓存
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      static-locations: classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/
+
+  # 配置 MySQL
   datasource:
-    url: jdbc:mysql://192.168.2.10:3306/czvisual?serverTimezone=UTC
+    url: jdbc:mysql://aedfh.tpddns.cn:9306/czvisual?serverTimezone=UTC
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
