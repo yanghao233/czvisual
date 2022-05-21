@@ -13,7 +13,7 @@ public class TestControl {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/")
+    @RequestMapping("/ee")
     public String hello(int id) {
         User user = userService.findUserById(id);
         System.out.println("hello");
