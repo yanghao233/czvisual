@@ -14,8 +14,8 @@ public class TestControl {
     private UserService userService;
 
     @RequestMapping("/")
-    public String hello(int id) {
-        User user = userService.findUserById(id);
+    public String hello(String username) {
+        User user = userService.findUserByUsername(username);
         System.out.println("hello");
         return user.toString();
     }

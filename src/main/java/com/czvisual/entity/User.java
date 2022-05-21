@@ -1,12 +1,75 @@
 package com.czvisual.entity;
 
 public class User {
-    private int id;
+    private Integer id;
     private String username;
     private String password;
+    private String realname;
+    private int sex;
+    private String phone;
+    private String position;
+    private Integer type;
+    private Integer available;
+    private String salt;
 
     public int getId() {
         return id;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Integer available) {
+        this.available = available;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public void setId(int id) {
@@ -35,6 +98,13 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", realname='" + realname + '\'' +
+                ", sex=" + sex +
+                ", phone='" + phone + '\'' +
+                ", position='" + position + '\'' +
+                ", type=" + type +
+                ", available=" + available +
+                ", salt='" + salt + '\'' +
                 '}';
     }
 }
