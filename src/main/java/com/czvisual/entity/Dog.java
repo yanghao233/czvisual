@@ -1,19 +1,10 @@
 package com.czvisual.entity;
 
-import java.io.Serializable;
 
 
 public class Dog  {
-    String name;
-    int age;
-
-    @Override
-    public String toString() {
-        return "Dog{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                '}';
-    }
+    private String name;
+    private int age;
 
     public String getName() {
         return name;

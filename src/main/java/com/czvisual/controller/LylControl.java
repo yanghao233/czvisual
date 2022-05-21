@@ -3,10 +3,12 @@ package com.czvisual.controller;
 import com.czvisual.entity.Dog;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.RequestContext;
+import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author laiyulong
@@ -16,13 +18,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/gs")
 public class LylControl {
     @RequestMapping("nmsl")
-    public String test(Model model,@RequestBody(required = false) String dd ){
-        //dd.setAge(dd.getAge());
-        Dog dog = new Dog();
-        dog.setAge(13);
-        dog.setName("EJIFIJ");
-        model.addAttribute("tmsl",dog);
-        //dd.setName("hah");
-        return "tmslmb";
+    public Object test( Model model,@RequestBody(required = false) Dog dd ){
+        if(dd == null){
+            return new RedirectView("/404.html");
+        }
+        model.addAttribute("dog",dd);
+        return "tms";
+    }
+    @RequestMapping("jb")
+    @ResponseBody
+    public Object jb(String hast, HttpServletResponse resp, HttpServletRequest req){
+        //resp.setHeader("GS","HHHH");
+        return "";
+        //return req.getHeader("host");
     }
 }
