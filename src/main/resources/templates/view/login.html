@@ -17,24 +17,6 @@
             background-size: auto;
         }
     </style>
-
-    <!--<script>
-        $(function(){
-            $("#loginname").blur(function () {
-                //判断用户名是否存在
-                $.get("qwer", {loginname: loginname}, function (data) {
-                    var exist = $("#userExist");
-                    if (data.userExist) {
-                        exist.css("color", "green");
-                        exist.html(data.msg);
-                    } else {
-                        exist.css("color", "red");
-                        exist.html(data.msg);
-                    }
-                });
-            });
-        });
-    </script>-->
 </head>
 <body class="loginBody">
 <form class="layui-form" id="loginFrm" th:action="@{/login}" method="post">
@@ -54,8 +36,8 @@
         <input type="password" id="pwd" placeholder="请输入密码" autocomplete="off" name="pwd" class="layui-input"
                lay-verify="required">
     </div>
-    <div class="layui-form-item input-item">
-        <span id="msg" th:text="${msg}"></span>
+    <div class="layui-form-item input-item" style="text-align: center">
+        <span id="msg" style="color: red" th:text="${msg}"></span>
     </div>
     <div class="layui-form-item">
         <button class="layui-btn layui-block " lay-filter="login" lay-submit>登录</button>
