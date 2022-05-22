@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ClfController {
     @RequestMapping("/clf")
     public String doo() {
-        return "view/login";
+        return "view/register";
     }
 }
