@@ -11,19 +11,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-@RequestMapping("/")
+//@RequestMapping("/")
 @Controller
+@RequestMapping("/sel")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/toRegister")
+    public String toRegister(){
+        return "view/register";
+    }
+
+    @RequestMapping("/toRegister2")
+    public String toRegister2(){
+        return "view/register2";
+    }
+
+    //跳转到登陆页面
+    @RequestMapping("toLogin")
+    public String toLogin() {
+        return "view/login";
+    }
     //登陆   shiro登陆
     @RequestMapping("login")
     public String login(Model model, HttpServletRequest request, String username, String pwd) {
-
-
         //第一步：建立subject
         Subject subject = SecurityUtils.getSubject();
         //第二步：封装token  凭证

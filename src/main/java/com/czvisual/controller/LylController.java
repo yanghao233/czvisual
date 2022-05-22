@@ -14,15 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 public class LylController {
     @RequestMapping("nmsl")
     public Object test( Model model,@RequestBody(required = false) Dog dd ){
-        if(dd == null){
-            return new RedirectView("/404.html");
-        }
-        model.addAttribute("dog",dd);
-        return "tms";
+        //if(dd == null){
+        //    return new RedirectView("/404.html");
+        //}
+        //model.addAttribute("dog",dd);
+        return "view/index";
     }
     @RequestMapping("jb")
-    @ResponseBody
     public Object jb(@RequestParam(name = "GS",required = false) String hast, HttpServletResponse resp, HttpServletRequest req){
-        return hast;
+        return "view/user/main";
     }
 }

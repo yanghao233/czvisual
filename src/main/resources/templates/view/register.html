@@ -1,40 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>注册</title>
-    <!-- 1. 导入CSS的全局样式 -->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <script th:src="@{/js/jquery-3.1.1.js}"></script>
-    <!-- 3. 导入bootstrap的js文件 -->
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/jquery.validate.min.js}"></script>
-    <script th:src="@{/js/messages_zh.min.js}"></script>
-    <script type="text/javascript">
-        function refreshCode() {
-            var vcode = document.getElementById("vcode");
-            //通过给连接加上时间戳让验证码可以正常刷新
-            //这个对方的路径后面再加
-            vcode.src = "" + new Date().getTime();
-        }
-    </script>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <link rel="icon" href="../images/timg.jpg">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/index.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
     <style th:inline="text">
-        .registerBody {
-            background: url([[@{/images/register_bg.jpg}]]);
-            /*margin-top: 580px;*/
+        .loginBody {
+            background: url([[@{/images/login-bg.png}]]);
+            margin-top: 580px;
             -webkit-background-size: 100%;
-            background-size: 100%;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            margin-left: 5px;
-        }
-
-        .btn {
-            margin-top: 30px;
-            margin-left: 60px;
-            margin-right: 60px;
+            background-size: auto;
         }
     </style>
     <script>
@@ -90,7 +70,7 @@
                     },
                     success: function (data) {
                         //验证返回的数据类型应该是json
-                        //包含userExist（布尔值）和 msg(存在或者不存在的提示文字)
+                        //包含userE必填项不能为空xist（布尔值）和 msg(存在或者不存在的提示文字)
                         var exist = $("#exist");
                         if (data.userExist) {
                             exist.css("color", "green");
@@ -105,52 +85,99 @@
         });
     </script>
 </head>
-<body class="registerBody">
-<div class="container">
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6" style="background-color: floralwhite;margin-top: 18%;box-shadow: 2px 2px 15px #d6c1cc">
-            <fieldset style="margin-top: 60px;margin-bottom: 30px;margin-left: 20px;margin-right: 20px">
-                <legend style="text-align: center">注册</legend>
-                <form class="register" id="registerForm" action="">
-                    <div class="form-group">
-                        <label for="username">用户名</label>
-                        <input type="text" class="form-control input-group" id="username" placeholder="用户名">
-                        <span id="exist"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">密码</label>
-                        <input type="password" class="form-control input-group" id="password" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm_password">确认密码</label>
-                        <input type="password" class="form-control input-group" id="confirm_password"
-                               placeholder="Password">
-                    </div>
-                    <div class="form-inline" style="text-align: center;margin-top: 5px">
-                        <label for="verifyCode"
-                               style="text-align: center;margin-left: 20px;margin-right: 20px">验证码：</label>
-                        <input type="text" name="verifycode" class="form-control" id="verifyCode"
-                               placeholder="请输入验证码"
-                               style="width: 120px;"/>
-                        <!--验证码码的路径后面更换成后端来的流-->
-                        <a href="javascript:refreshCode()"
-                           style="text-align: center;margin-left: 20px;margin-right: 20px"><img
-                                th:src="@{/images/check.png}"
-                                style="width: 120px;height: 30px"
-                                title="看不清？点击刷新"
-                                id="vcode"/></a>
-                    </div>
-                    <div class="form-group" style="text-align: center">
-                        <button type="submit" class="btn btn-primary">注册</button>
-                        <button type="button" class="btn btn-info">重置</button>
-                    </div>
+<body class="loginBody">
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-3"></div>-->
+<!--        <div class="col-md-6" style="background-color: floralwhite;margin-top: 18%;box-shadow: 2px 2px 15px #d6c1cc">-->
+<!--            <fieldset style="margin-top: 60px;margin-bottom: 30px;margin-left: 20px;margin-right: 20px">-->
+<!--                <legend style="text-align: center">注册</legend>-->
 
-                </form>
-            </fieldset>
-        </div>
-        <div class="col-md-3"></div>
+<form class="layui-form" style="height: auto" id="registerForm" action="">
+    <div class="login_face"><img src="../images/timg.png" class="userAvatar"></div>
+    <div class="layui-form-item input-item">
+        <label>用户名</label>
+        <input type="text" id="username" placeholder="用户名" autocomplete="off" name="username" class="layui-input"
+               lay-verify="required">
     </div>
-</div>
+    <div class="layui-form-item input-item">
+        <label>密码</label>
+        <input type="text" id="password" placeholder="密码" autocomplete="off" name="username" class="layui-input"
+               lay-verify="required">
+    </div>
+    <div class="layui-form-item input-item">
+        <label>确认密码</label>
+        <input type="text" id="confirm_password" placeholder="确认密码" autocomplete="off" name="username"
+               class="layui-input"
+               lay-verify="required">
+    </div>
+    <div class="layui-form-item input-item layui-row">
+            <div class="layui-col-xs6 ">
+                <label>验证码</label>
+                <input type="text"  id="code" name="code" required="" lay-verify="required" lay-vertype="tips" placeholder="请输入验证码"
+                       autocomplete="off" class="layui-input" style="width: 100px">
+            </div>
+            <div class=" layui-col-xs6">
+                <a href="javascript:refreshCode()">
+                    <img th:src="@{/images/check.png}"
+                         style="width: 120px;height: 30px"
+                         title="看不清？点击刷新"
+                         id="vcode"/>
+                </a>
+            </div>
+
+        <!--        <div class="layui-form-mid layui-word-aux">请输入验证码</div>-->
+        <!--验证码码的路径后面更换成后端来的流-->
+
+
+    </div>
+    <div class="layui-btn-container">
+        <button type="submit" lay-filter="register" lay-submit class="layui-btn" style="margin-left: 50px">注册</button>
+        <button type="button" class="layui-btn " style="margin-right: 50px;float: right">重置</button>
+    </div>
+
+    <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript">
+        layui.use(['form', 'layer', 'jquery'], function () {
+            var form = layui.form,
+                layer = parent.layer === undefined ? layui.layer : top.layer
+            $ = layui.jquery;
+            //登录按钮
+            form.on("submit(register)", function (data) {
+                $(this).text("zc中...").attr("disabled", "disabled").addClass("layui-disabled");
+                setTimeout(function () {
+                    $("#registerForm").submit();
+                }, 500);
+                return false;
+            })
+            // $("#register").click(function () {
+            //     $("#msg").fadeOut(500);
+            // })
+            // $("#pwd").click(function () {
+            //     $("#msg").fadeOut(500);
+            // })
+            //表单输入效果
+            $(".loginBody .input-item").click(function (e) {
+                e.stopPropagation();
+                $(this).addClass("layui-input-focus").find(".layui-input").focus();
+            })
+            $(".loginBody .layui-form-item .layui-input").focus(function () {
+                $(this).parent().addClass("layui-input-focus");
+            })
+            $(".loginBody .layui-form-item .layui-input").blur(function () {
+                $(this).parent().removeClass("layui-input-focus");
+                $(this).parent().parent().removeClass("layui-input-focus");
+
+                if ($(this).val() != '') {
+                    $(this).parent().addClass("layui-input-active");
+                } else {
+                    $(this).parent().removeClass("layui-input-active");
+                }
+            })
+
+        })
+
+    </script>
 </body>
 </html>
