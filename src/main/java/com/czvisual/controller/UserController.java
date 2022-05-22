@@ -13,19 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-
+@RequestMapping("/")
 @Controller
-@RequestMapping("/sel")
-public class TestControl {
+public class UserController {
     @Autowired
     private UserService userService;
-
-
-    //跳转到登陆页面
-    @RequestMapping("toLogin")
-    public String toLogin() {
-        return "view/login";
-    }
 
     //登陆   shiro登陆
     @RequestMapping("login")

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/gs")
-public class LylControl {
+public class LylController {
     @RequestMapping("nmsl")
     public Object test( Model model,@RequestBody(required = false) Dog dd ){
         if(dd == null){

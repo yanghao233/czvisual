@@ -7,5 +7,5 @@ import org.springframework.stereotype.Controller;
 * 包括根路径重定向，导航栏树的构建，用户基本信息的查询
 */
 @Controller
-public class IndexControl {
+public class IndexController {
 }
