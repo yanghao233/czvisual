@@ -47,11 +47,11 @@ public class UserController {
             User users = userService.findUserByUsername(username);
             //把user放进session
             request.getSession().setAttribute("user", users);
-            model.addAttribute("loginname", users.getRealname());
-            model.addAttribute("id", users.getId());
+            //model.addAttribute("loginname", users.getRealname());
+            //model.addAttribute("id", users.getId());
             //把yonghu放进session
             request.getSession().setAttribute("yonghu", users.getRealname());
-            return "view/index";//跳转首页
+            return "redirect:/index/";//跳转首页
         } catch (UnknownAccountException e) {
             //用户为空或不存在
             model.addAttribute("msg", "不存在这样的用户!");

@@ -55,7 +55,7 @@
         form.on("submit(login)", function (data) {
             $(this).text("登录中...").attr("disabled", "disabled").addClass("layui-disabled");
             setTimeout(function () {
-                $("#loginFrm").submit();
+                $("#loginForm").submit();
             }, 500);
             return false;
         })
