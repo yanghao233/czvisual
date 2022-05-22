@@ -1,5 +1,6 @@
 package com.czvisual.controller;
 
+import com.czvisual.config.UserCredentialsMatcher;
 import com.czvisual.entity.User;
 import com.czvisual.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -14,32 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-//@RequestMapping("/")
-@Controller
-@RequestMapping("/sel")
-public class UserController {
 
+@Controller
+public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/toRegister")
-    public String toRegister(){
-        return "view/register";
-    }
-
-    @RequestMapping("/toRegister2")
-    public String toRegister2(){
-        return "view/register2";
-    }
-
-    //跳转到登陆页面
     @RequestMapping("toLogin")
     public String toLogin() {
         return "view/login";
     }
+
+    @RequestMapping("toRegister")
+    public String register() {
+        return "view/register";
+    }
+
     //登陆   shiro登陆
     @RequestMapping("login")
     public String login(Model model, HttpServletRequest request, String username, String pwd) {
+
+
         //第一步：建立subject
         Subject subject = SecurityUtils.getSubject();
         //第二步：封装token  凭证
@@ -66,4 +62,28 @@ public class UserController {
         }
     }
 
+
+    @RequestMapping("register")
+    @ResponseBody
+    public Object addUser(User user){
+        int i1 = userService.checkUser(user);
+        if(i1==1){
+            return "当前登陆名已存在";
+        }else {
+            //加盐
+            String salt = UserCredentialsMatcher.generateSalt(6);
+            //MD5加密迭代两次
+            user.setPassword(UserCredentialsMatcher.encryptPassword("md5", "123456", salt, 2));
+            user.setType(3);
+            user.setAvailable(1);
+            user.setSalt(salt);
+            System.out.println(salt);
+            int i = userService.addUser(user);
+            if (i > 0) {
+                return "注册成功";
+            } else {
+                return "注册失败";
+            }
+        }
+    }
 }

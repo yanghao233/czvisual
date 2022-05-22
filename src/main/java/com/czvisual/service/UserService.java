@@ -10,11 +10,15 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public User findUserById(int id) {
-        return userMapper.findUserById(id);
-    }
-
     public User findUserByUsername(String username) {
         return userMapper.findUserByUsername(username);
+    }
+
+    public int checkUser(User user) {
+        return userMapper.checkUser(user.getUsername());
+    }
+
+    public int addUser(User user) {
+        return userMapper.addUser(user);
     }
 }
