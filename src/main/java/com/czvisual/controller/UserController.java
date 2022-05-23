@@ -31,11 +31,14 @@ public class UserController {
         return "view/register";
     }
 
+    @RequestMapping("")
+    public String defaultMapping() {
+        return "redirect:/index";
+    }
+
     //登陆   shiro登陆
     @RequestMapping("login")
     public String login(Model model, HttpServletRequest request, String username, String pwd) {
-
-
         //第一步：建立subject
         Subject subject = SecurityUtils.getSubject();
         //第二步：封装token  凭证
@@ -51,7 +54,7 @@ public class UserController {
             //model.addAttribute("id", users.getId());
             //把yonghu放进session
             request.getSession().setAttribute("yonghu", users.getRealname());
-            return "redirect:/index/";//跳转首页
+            return "redirect:/index";//跳转首页
         } catch (UnknownAccountException e) {
             //用户为空或不存在
             model.addAttribute("msg", "不存在这样的用户!");
@@ -73,9 +76,7 @@ public class UserController {
             //加盐
             String salt = UserCredentialsMatcher.generateSalt(6);
             //MD5加密迭代两次
-            user.setPassword(UserCredentialsMatcher.encryptPassword("md5", "123456", salt, 2));
-            user.setType(3);
-            user.setAvailable(1);
+            user.setPassword(UserCredentialsMatcher.encryptPassword("md5", user.getPassword(), salt, 2));
             user.setSalt(salt);
             System.out.println(salt);
             int i = userService.addUser(user);
@@ -85,5 +86,11 @@ public class UserController {
                 return "注册失败";
             }
         }
+    }
+
+    @RequestMapping("logout")
+    public String logout() {
+        SecurityUtils.getSubject().logout();
+        return "view/login";
     }
 }

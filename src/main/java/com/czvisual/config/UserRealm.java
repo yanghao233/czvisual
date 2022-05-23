@@ -8,10 +8,15 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 
 public class UserRealm extends AuthorizingRealm {
@@ -24,7 +29,6 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         //获取的前台username
-
         String username = (String) authenticationToken.getPrincipal();
 
         User sysUser = null;
@@ -48,7 +52,16 @@ public class UserRealm extends AuthorizingRealm {
      * */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        HashSet<String> roles = new HashSet<>();
+        roles.add("admin");
+        if(((User)principalCollection.getPrimaryPrincipal()).getUsername().equals("1")){
+            roles.add("test");
+        }
+        //roles.add("user");
+        info.setRoles(roles);
+        info.setStringPermissions(new HashSet<String>());
+        return info;
     }
 
 

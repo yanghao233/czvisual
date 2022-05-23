@@ -4,12 +4,12 @@ public class User {
     private Integer id;
     private String username;
     private String password;
-    private String realname;
+    private String realname = "普通用户";
     private int sex;
     private String phone;
-    private String position;
-    private Integer type;
-    private Integer available;
+    private String position = "普通用户";
+    private Integer type = 3;
+    private Integer available = 1;
     private String salt;
 
     public int getId() {

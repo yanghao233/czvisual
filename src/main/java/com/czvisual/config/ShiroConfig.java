@@ -4,7 +4,6 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,11 +46,8 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         Map<String, String> filtermap = new LinkedHashMap<String, String>();
-        //toLogin/login界面可以未认证直接访问
-
 
         filtermap.put("/login", "anon");
-        filtermap.put("index.html", "anon");
         filtermap.put("/register", "anon");
         filtermap.put("/toRegister", "anon");
 
@@ -62,7 +58,11 @@ public class ShiroConfig {
         filtermap.put("*.png", "anon");
         filtermap.put("*jpg", "anon");
 
+        filtermap.put("/logout", "logout");
 
+        //filtermap.put("/index*","authc");
+        //filtermap.put("/index/test1","anon,roles[gs]");
+        //filtermap.put("/index/test2","roles[gs]");
 
         //未认证都不允许通过
         filtermap.put("/**", "authc");
@@ -70,7 +70,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filtermap);
         //如果访问的页面未认证   跳转到登陆页面
         shiroFilterFactoryBean.setLoginUrl("/toLogin");
-
+        shiroFilterFactoryBean.setUnauthorizedUrl("/error/unAuthorized");
         return shiroFilterFactoryBean;
     }
 
@@ -91,4 +91,26 @@ public class ShiroConfig {
     public ShiroDialect getShiroDialect() {
         return new ShiroDialect();
     }
+
+
+    /*
+    * 如果需要通过注解来授权，就要创建这两个Bean，但是采用Filter就不用
+    * 采用注解进行权限控制太分散
+    * */
+    //@Bean
+    //public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator(){
+    //    DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+    //    advisorAutoProxyCreator.setProxyTargetClass(true);
+    //    return advisorAutoProxyCreator;
+    //}
+    //
+    //@Bean
+    //public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
+    //    AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+    //    authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+    //    return authorizationAttributeSourceAdvisor;
+    //}
+
+
+
 }
