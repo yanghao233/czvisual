@@ -63,6 +63,14 @@ public class ShiroConfig {
         //filtermap.put("/index*","authc");
         //filtermap.put("/index/test1","anon,roles[gs]");
         //filtermap.put("/index/test2","roles[gs]");
+        filtermap.put("/hsManage/overview","perms[hsManage:overview]");
+        filtermap.put("/hsManage/tableview","perms[hsManage:tableview]");
+        filtermap.put("/dataManage/hs","perms[dataManage:operateHsInfo]");
+        filtermap.put("/dataManage/operatehsdata","perms[dataManage:operateHsData]");
+        filtermap.put("/chartAnalysis/*","perms[chartAnalysis]");
+        filtermap.put("/user/manageUser","perms[user:manageUser]");
+        filtermap.put("/user/updateProfile","perms[user:updateProfile]");
+
 
         //未认证都不允许通过
         filtermap.put("/**", "authc");

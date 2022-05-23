@@ -9,6 +9,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -54,13 +55,43 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         HashSet<String> roles = new HashSet<>();
-        roles.add("admin");
-        if(((User)principalCollection.getPrimaryPrincipal()).getUsername().equals("1")){
-            roles.add("test");
+        HashSet<String> permissions = new HashSet<>();
+        switch (((User) principalCollection.getPrimaryPrincipal()).getType()) {
+            case 0:
+                roles.add("superAdmin");
+                permissions.add("hsManage:overview");
+                permissions.add("hsManage:tableview");
+                permissions.add("dataManage:operateHsInfo");
+                permissions.add("dataManage:operateHsData");
+                permissions.add("chartAnalysis");
+                permissions.add("user:manageUser");
+                permissions.add("user:updateProfile");
+                break;
+            case 1:
+                roles.add("recorder");
+                permissions.add("hsManage:overview");
+                permissions.add("hsManage:tableview");
+                permissions.add("dataManage:operateHsInfo");
+                permissions.add("dataManage:operateHsData");
+                permissions.add("user:updateProfile");
+                break;
+            case 2:
+                roles.add("analyst");
+                permissions.add("hsManage:overview");
+                permissions.add("hsManage:tableview");
+                permissions.add("chartAnalysis");
+                permissions.add("user:manageUser");
+                permissions.add("user:updateProfile");
+                break;
+            case 3:
+                roles.add("normalUser");
+                permissions.add("hsManage:overview");
+                permissions.add("user:updateProfile");
+                break;
+
         }
-        //roles.add("user");
         info.setRoles(roles);
-        info.setStringPermissions(new HashSet<String>());
+        info.setStringPermissions(permissions);
         return info;
     }
 

@@ -23,7 +23,7 @@
                 <li class="layui-nav-item" id="userInfo">
                     <a href="javascript:;"><cite class="adminName"><span th:text="${loginname}"></span></cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" th:data-url="@{../toUpdateLogin(userid=${id})}"><i class="seraph icon-ziliao"
+                        <dd><a href="javascript:;" th:data-url="@{/user/updateProfile(userid=${id})}"><i class="seraph icon-ziliao"
                                                                                          data-icon="icon-ziliao"></i><cite>个人资料</cite></a>
                         </dd>
 
@@ -37,7 +37,7 @@
     <!-- 左侧导航 -->
     <div class="layui-side layui-bg-black">
         <div class="user-photo">
-            <a class="img" title="我的头像"><img src="../images/timg.jpg" class="userAvatar"></a>
+            <a class="img" title="我的头像"><img src="../images/timg.png" class="userAvatar"></a>
             <p>你好！<span th:text="${loginname}"></span>, 欢迎登录</p>
         </div>
 
@@ -70,7 +70,7 @@
             </ul>
             <div class="layui-tab-content clildFrame">
                 <div class="layui-tab-item layui-show">
-                    <iframe th:src="@{../toMain}"></iframe>
+                    <iframe th:src="@{/index/main}"></iframe>
                 </div>
             </div>
         </div>
@@ -101,7 +101,7 @@
         layer = parent.layer === undefined ? layui.layer : top.layer;
         tab = layui.bodyTab({
             openTabNum: "50",  //最大可打开窗口数量
-            url: "/initTreeNode"//获取菜单json地址
+            url: "/index/initTreeNode"//获取菜单json地址
         });
 
         function countdown() {

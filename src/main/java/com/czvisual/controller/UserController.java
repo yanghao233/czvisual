@@ -21,19 +21,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("")
+    public String defaultMapping() {
+        return "redirect:/index";
+    }
     @RequestMapping("toLogin")
     public String toLogin() {
         return "view/login";
     }
-
     @RequestMapping("toRegister")
     public String register() {
         return "view/register";
-    }
-
-    @RequestMapping("")
-    public String defaultMapping() {
-        return "redirect:/index";
     }
 
     //登陆   shiro登陆
@@ -93,4 +91,15 @@ public class UserController {
         SecurityUtils.getSubject().logout();
         return "view/login";
     }
+
+    @RequestMapping("/user/manageUser")
+    public String manageUser(Model model){
+        return "view/user/manageUser.html";
+    }
+
+    @RequestMapping("/user/updateProfile")
+    public String updateProfile(Model model){
+        return "view/user/updateProfile.html";
+    }
+
 }
