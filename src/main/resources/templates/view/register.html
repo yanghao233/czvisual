@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>登录</title>
+    <title>注册</title>
     <link rel="icon" href="../images/timg.jpg">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <link rel="stylesheet" th:href="@{/css/index.css}" media="all"/>
@@ -17,81 +17,111 @@
             background-size: auto;
         }
     </style>
-    <script>
-        $.validator.setDefaults({
-            submitHandler: function (form) {
-                form.submit();
-            }
-        });
-        $().ready(function () {
-            $("#registerForm").validate({
-                rules: {
-                    username: {
-                        required: true,
-                        minlength: 3
-                    },
-                    password: {
-                        required: true,
-                        minlength: 5
-                    },
-                    confirm_password: {
-                        required: true,
-                        minlength: 5,
-                        equalTo: "#password"
-                    },
-                    verifyCode: "required"
-                },
-                messages: {
-                    username: {
-                        required: "请输入用户名",
-                        minlength: "用户名必须由两个字符组成"
-                    },
-                    password: {
-                        required: "请输入密码",
-                        minlength: "密码长度不能小于5个字符"
-                    },
-                    confirm_password: {
-                        required: "请确认宁的密码",
-                        minlength: "密码长度不能小于5个字符"
-                    },
-                    verifyCode: "请输入验证码"
+    <script th:inline="text">
+        $(function () {
+            var password = $("#password");
+            var confirm = $("#confirm_password");
+            //跳转到判断数据库中你是否存在响应的用户的类似于servlet的神马东东
+            $("#username").blur(function () {
+                var user = $("#username");
+
+                if (user.val() == "") {
+                    layui.use('layer', function () {
+                        layer = layui.layer;
+                        layer.msg("用户名为必填字段！！！", {
+                            icon: 2,
+                            shift: 6
+                        });
+                    });
+                } else {
+                    $.ajax({
+                        method: "post",
+                        data: {
+                            "username": $("#username").val()
+                        },
+                        success: function (data) {
+                            //验证返回的数据类型应该是bool
+                            //用户名已经被占用返回false，如果用户名没有被占用就返回true
+                            if (data) {
+                                layui.use('layer', function () {
+                                    layer = layui.layer;
+                                    layer.msg("该用户名可以使用！！！", {
+                                        icon: 6
+                                    });
+                                })
+                            } else {
+                                layui.use('layer', function () {
+                                    layer = layui.layer;
+                                    layer.msg("该用户名已被占用！！！", {
+                                        icon: 2,
+                                        shift: 6
+                                    });
+                                })
+                            }
+                        },
+                        error: function () {
+                            layui.use('layer', function () {
+                                layer = layui.layer;
+                                layer.msg("请检查以下你的用户名哦！！！", {
+                                    icon: 7,
+                                    shift: 6
+                                });
+                            })
+                        }
+                    });
+
+                }
+
+
+            });
+            $("#password").blur(function () {
+                if (password.val() == "") {
+                    layui.use('layer', function () {
+                        layer = layui.layer;
+                        layer.msg("一定要设置密码哦！！！", {
+                            icon: 2,
+                            shift: 6
+                        });
+                    });
+                }
+            });
+            $("#confirm_password").blur(function () {
+                if (confirm.val() == "") {
+                    layui.use('layer', function () {
+                        layer = layui.layer;
+                        layer.msg("再确认以下密码嘛！！！", {
+                            icon: 2,
+                            shift: 6
+                        });
+                    });
+                } else {
+                    if (confirm.val() != password.val()) {
+                        layui.use('layer', function () {
+                            layer = layui.layer;
+                            layer.msg("两次输入的密码不相同哦！！！", {
+                                icon: 2,
+                                shift: 6
+                            });
+                        });
+                    }
+                }
+            });
+            $("#code").blur(function () {
+                if ($("#code").val() == "") {
+                    layui.use('layer', function () {
+                        layer = layui.layer;
+                        layer.msg("请输入验证码", {
+                            icon: 2,
+                            shift: 6
+                        });
+                    });
                 }
             });
         });
-    </script>
-    <script th:inline="text">
-        $(function () {
-            //跳转到判断数据库中你是否存在响应的用户的类似于servlet的神马东东
-            $("#username").blur("/", function () {
-                $.ajax({
-                    method: "post",
-                    data: {
-                        "username": $("#username").val()
-                    },
-                    success: function (data) {
-                        //验证返回的数据类型应该是json
-                        //包含userE必填项不能为空xist（布尔值）和 msg(存在或者不存在的提示文字)
-                        var exist = $("#exist");
-                        if (data.userExist) {
-                            exist.css("color", "green");
-                            exist.html(data.msg);
-                        } else {
-                            exist.css("color", "red");
-                            exist.html(data.msg);
-                        }
-                    }
-                });
-            });
-        });
+
     </script>
 </head>
 <body class="loginBody">
-<!--<div class="container">-->
-<!--    <div class="row">-->
-<!--        <div class="col-md-3"></div>-->
-<!--        <div class="col-md-6" style="background-color: floralwhite;margin-top: 18%;box-shadow: 2px 2px 15px #d6c1cc">-->
-<!--            <fieldset style="margin-top: 60px;margin-bottom: 30px;margin-left: 20px;margin-right: 20px">-->
-<!--                <legend style="text-align: center">注册</legend>-->
 
 <form class="layui-form" style="height: auto" id="registerForm" action="register">
     <div class="login_face"><img src="../images/timg.png" class="userAvatar"></div>
@@ -112,19 +142,20 @@
                lay-verify="required">
     </div>
     <div class="layui-form-item input-item layui-row">
-            <div class="layui-col-xs6 ">
-                <label>验证码</label>
-                <input type="text"  id="code" name="code" required="" lay-verify="required" lay-vertype="tips" placeholder="请输入验证码"
-                       autocomplete="off" class="layui-input" style="width: 100px">
-            </div>
-            <div class=" layui-col-xs6">
-                <a href="javascript:refreshCode()">
-                    <img th:src="@{/images/check.png}"
-                         style="width: 120px;height: 30px"
-                         title="看不清？点击刷新"
-                         id="vcode"/>
-                </a>
-            </div>
+        <div class="layui-col-xs6 ">
+            <label>验证码</label>
+            <input type="text" id="code" name="code" required="" lay-verify="required" lay-vertype="tips"
+                   placeholder="验证码"
+                   autocomplete="off" class="layui-input" style="width: 100px">
+        </div>
+        <div class=" layui-col-xs6">
+            <a href="javascript:refreshCode()">
+                <img th:src="@{/images/check.png}"
+                     style="width: 120px;height: 30px"
+                     title="看不清？点击刷新"
+                     id="vcode"/>
+            </a>
+        </div>
 
         <!--        <div class="layui-form-mid layui-word-aux">请输入验证码</div>-->
         <!--验证码码的路径后面更换成后端来的流-->
@@ -135,49 +166,44 @@
         <button type="submit" lay-filter="register" lay-submit class="layui-btn" style="margin-left: 50px">注册</button>
         <button type="button" class="layui-btn " style="margin-right: 50px;float: right">重置</button>
     </div>
+</form>
 
-    <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-    <script type="text/javascript">
-        layui.use(['form', 'layer', 'jquery'], function () {
-            var form = layui.form,
-                layer = parent.layer === undefined ? layui.layer : top.layer
-            $ = layui.jquery;
-            //登录按钮
-            form.on("submit(register)", function (data) {
-                $(this).text("zc中...").attr("disabled", "disabled").addClass("layui-disabled");
-                setTimeout(function () {
-                    $("#registerForm").submit();
-                }, 500);
-                return false;
-            })
-            // $("#register").click(function () {
-            //     $("#msg").fadeOut(500);
-            // })
-            // $("#pwd").click(function () {
-            //     $("#msg").fadeOut(500);
-            // })
-            //表单输入效果
-            $(".loginBody .input-item").click(function (e) {
-                e.stopPropagation();
-                $(this).addClass("layui-input-focus").find(".layui-input").focus();
-            })
-            $(".loginBody .layui-form-item .layui-input").focus(function () {
-                $(this).parent().addClass("layui-input-focus");
-            })
-            $(".loginBody .layui-form-item .layui-input").blur(function () {
-                $(this).parent().removeClass("layui-input-focus");
-                $(this).parent().parent().removeClass("layui-input-focus");
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'jquery'], function () {
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer
+        $ = layui.jquery;
+        //登录按钮
+        form.on("submit(register)", function (data) {
+            $(this).text("注册中...").attr("disabled", "disabled").addClass("layui-disabled");
+            setTimeout(function () {
+                $("#registerForm").submit();
+            }, 500);
+            return false;
+        })
+        $(".loginBody .input-item").click(function (e) {
+            e.stopPropagation();
+            $(this).addClass("layui-input-focus").find(".layui-input").focus();
+        })
+        $(".loginBody .layui-form-item .layui-input").focus(function () {
+            $(this).parent().addClass("layui-input-focus");
+        })
+        $(".loginBody .layui-form-item .layui-input").blur(function () {
+            $(this).parent().removeClass("layui-input-focus");
+            $(this).parent().parent().removeClass("layui-input-focus");
 
-                if ($(this).val() != '') {
-                    $(this).parent().addClass("layui-input-active");
-                } else {
-                    $(this).parent().removeClass("layui-input-active");
-                }
-            })
-
+            if ($(this).val() != '') {
+                $(this).parent().addClass("layui-input-active");
+            } else {
+                $(this).parent().removeClass("layui-input-active");
+            }
         })
 
-    </script>
+    })
+
+</script>
+
 </body>
 </html>
