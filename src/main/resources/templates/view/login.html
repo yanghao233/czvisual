@@ -16,9 +16,29 @@
             -webkit-background-size: 100%;
             background-size: auto;
         }
+
+        #toRegister {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 2;
+            font-size: medium;
+            color: deepskyblue;
+        }
     </style>
+    <script>
+        $(function () {
+            $("#toRegister").mouseover(function () {
+                $("#toRegister").css("color","hotpink");
+            });
+            $("#toRegister").mouseout(function () {
+                $("#toRegister").css("color","deepskyblue");
+            });
+        });
+    </script>
 </head>
 <body class="loginBody">
+<a href="register.html" id="toRegister">没有账户？先注册一个！！！</a>
 <form class="layui-form" style="" id="loginForm" th:action="@{/login}" method="post">
     <div class="login_face"><img src="../images/timg.png" class="userAvatar"></div>
     <div class="layui-form-item input-item">
@@ -60,10 +80,10 @@
             return false;
         })
         $("#loginname").click(function () {
-            $("#msg").fadeOut(500);
+            $("#msg").fadeOut("slow");
         })
         $("#pwd").click(function () {
-            $("#msg").fadeOut(500);
+            $("#msg").fadeOut("slow");
         })
         //表单输入效果
         $(".loginBody .input-item").click(function (e) {

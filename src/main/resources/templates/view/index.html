@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>医院</title>
+    <title>川藏铁路沿线温泉数据可视化系统</title>
     <link rel="icon" href="../images/timg.jpg">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <link rel="stylesheet" th:href="@{/css/index.css}" media="all"/>
@@ -12,7 +12,7 @@
     <!-- 顶部 -->
     <div class="layui-header header">
         <div class="layui-main mag0">
-            <a href="#" class="logo">医院管理</a>
+            <a href="#" class="logo">温泉可视化</a>
             <!-- 显示/隐藏菜单 -->
             <a href="javascript:;" class="seraph hideMenu icon-caidan"></a>
             <!-- 顶部右侧菜单 -->
@@ -37,7 +37,7 @@
     <!-- 左侧导航 -->
     <div class="layui-side layui-bg-black">
         <div class="user-photo">
-            <a class="img" title="我的头像"><img src="../images/timg.jpg" class="userAvatar"></a>
+            <a class="img" title="我的头像"><img th:src="@{/images/timg.png}" class="userAvatar"></a>
             <p>你好！<span th:text="${loginname}"></span>, 欢迎登录</p>
         </div>
 
@@ -70,7 +70,7 @@
             </ul>
             <div class="layui-tab-content clildFrame">
                 <div class="layui-tab-item layui-show">
-                    <iframe th:src="@{../toMain}"></iframe>
+                    <iframe th:src="@{../gs/jb}"></iframe>
                 </div>
             </div>
         </div>
