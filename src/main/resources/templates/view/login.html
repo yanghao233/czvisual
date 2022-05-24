@@ -38,7 +38,7 @@
     </script>
 </head>
 <body class="loginBody">
-<a href="register.html" id="toRegister">没有账户？先注册一个！！！</a>
+<a th:href="@{/toRegister}" id="toRegister">没有账户？先注册一个！！！</a>
 <form class="layui-form" style="" id="loginForm" th:action="@{/login}" method="post">
     <div class="login_face"><img src="../images/timg.png" class="userAvatar"></div>
     <div class="layui-form-item input-item">
@@ -73,7 +73,7 @@
         $ = layui.jquery;
         //登录按钮
         form.on("submit(login)", function (data) {
-            $(this).text("登录中...").attr("disabled", "disabled").addClass("layui-disabled");
+            $(this).text("登录中...").attr("disabled", "disabled").addClass("layui-disabled").addClass("layui-icon").addClass("layui-icon-loading");
             setTimeout(function () {
                 $("#loginForm").submit();
             }, 500);
