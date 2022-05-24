@@ -55,41 +55,44 @@
 </head>
 <body>
 <div class="container">
-    <div class="work" id="work1">
-        <div class="row">
-            <div class="img">
-                <a><img th:src="@{/images/one.png}"/></a>
+    <div class="layui-row">
+        <div class="work layui-col-md3 layui-col-sm6 layui-col-xs12" id="work1">
+            <div class="row">
+                <div class="img">
+                    <a><img th:src="@{/images/one.png}"/></a>
+                </div>
+                <div class="num"><h5>温泉管理&nbsp;</h5></div>
             </div>
-            <div class="num"><h5>温泉管理&nbsp;</h5></div>
         </div>
-    </div>
-    <div class="work" id="work2">
-        <div class="row">
-            <div class="img">
-                <a><img class="layui-icon-template" th:src="@{/images/two.png}"/></a>
+        <div class="work layui-col-md3 layui-col-sm6 layui-col-xs12" id="work2">
+            <div class="row">
+                <div class="img">
+                    <a><img class="layui-icon-template" th:src="@{/images/two.png}"/></a>
+                </div>
+                <div class="num"><h5>数据管理&nbsp;</h5></div>
             </div>
-            <div class="num"><h5>数据管理&nbsp;</h5></div>
         </div>
-    </div>
-    <div class="work" id="work3">
-        <div class="row">
-            <div class="img">
-                <a><img th:src="@{/images/three.png}"/></a>
+        <div class="work layui-col-md3 layui-col-sm6 layui-col-xs12" id="work3">
+            <div class="row">
+                <div class="img">
+                    <a><img th:src="@{/images/three.png}"/></a>
+                </div>
+                <div class="num"><h5>图表分析&nbsp;</h5></div>
             </div>
-            <div class="num"><h5>图表分析&nbsp;</h5></div>
         </div>
-    </div>
-    <div class="work" id="work4">
-        <div class="row">
-            <div class="img">
-                <a><img th:src="@{/images/four.png}"/></a>
+        <div class="work layui-col-md3 layui-col-sm6 layui-col-xs12" id="work4">
+            <div class="row">
+                <div class="img">
+                    <a><img th:src="@{/images/four.png}"/></a>
+                </div>
+                <div class="num"><h5>用户管理&nbsp;</h5></div>
             </div>
-            <div class="num"><h5>用户管理&nbsp;</h5></div>
         </div>
     </div>
 </div>
+
 <script th:src="@{/layui/layui.js}"></script>
-<script type="text/javascript" th:inline="none">
+<script type="text/javascript" th:inline="text">
     layui.use(['jquery', 'layer', 'form', 'table'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
