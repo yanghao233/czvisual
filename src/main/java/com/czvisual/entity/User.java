@@ -1,15 +1,15 @@
 package com.czvisual.entity;
 
 public class User {
-    private Integer id;
+    private int id;
     private String username;
     private String password;
     private String realname = "普通用户";
     private int sex;
     private String phone;
     private String position = "普通用户";
-    private Integer type = 3;
-    private Integer available = 1;
+    private int type = 3;
+    private int available = 1;
     private String salt;
 
     public int getId() {
@@ -48,19 +48,19 @@ public class User {
         this.position = position;
     }
 
-    public Integer getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public Integer getAvailable() {
+    public int getAvailable() {
         return available;
     }
 
-    public void setAvailable(Integer available) {
+    public void setAvailable(int available) {
         this.available = available;
     }
 

@@ -120,11 +120,11 @@ public class UserController {
 
     @RequestMapping("/user/changePassword")
     @ResponseBody
-    public String changePassword(@DefaultValue("123456") String password) {
+    public String changePassword(int id, @DefaultValue("123456") String password) {
         String salt = UserCredentialsMatcher.generateSalt(6);
         //MD5加密迭代两次
         String newPassword = UserCredentialsMatcher.encryptPassword("md5", password, salt, 2);
-        int i = userService.changePassword(newPassword, salt);
+        int i = userService.changePassword(id, newPassword, salt);
         if (i > 0) {
             return "修改成功";
         } else {
@@ -148,9 +148,9 @@ public class UserController {
     public String deleteUser(int id) {
         int i = userService.deleteUser(id);
         if (i > 0) {
-            return "修改成功";
+            return "删除成功";
         } else {
-            return "修改失败";
+            return "删除失败";
         }
     }
 }
