@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @Controller
 public class UserController {
     @Autowired
@@ -85,6 +87,18 @@ public class UserController {
             } else {
                 return "注册失败";
             }
+        }
+    }
+
+
+    @RequestMapping(value = "/user/isNameExist",method = POST)
+    @ResponseBody
+    public String isNameExist(User user){
+        int i1 = userService.checkUser(user);
+        if (i1 == 1) {
+            return "true";
+        }else{
+            return "false";
         }
     }
 
