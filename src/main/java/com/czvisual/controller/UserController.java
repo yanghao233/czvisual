@@ -129,7 +129,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/user/updateUser")
+    @RequestMapping("/user/deleteUser")
     @ResponseBody
     public String deleteUser(int id) {
         int i = userService.deleteUser(id);
