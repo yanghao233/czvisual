@@ -5,6 +5,8 @@ import com.czvisual.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -20,5 +22,21 @@ public class UserService {
 
     public int addUser(User user) {
         return userMapper.addUser(user);
+    }
+
+    public List<User> findAll(User user) {
+        return userMapper.findAll(user);
+    }
+
+    public int updateUser(User user) {
+        return userMapper.updateUser(user);
+    }
+
+    public int changePassword(String password, String salt) {
+        return userMapper.changePassword(password, salt);
+    }
+
+    public int deleteUser(int id) {
+        return userMapper.deleteUser(id);
     }
 }

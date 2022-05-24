@@ -9,6 +9,16 @@
         values (#{username}, #{password}, #{realname}, #{sex}, #{phone}, #{position}, #{type}, #{available},
                 #{salt})
     </insert>
+    <update id="updateUser" parameterType="User">
+        update user set username=#{username}, realname=#{realname}, sex=#{sex}, phone={#phone}, position=#{position}, type=#{type}, available=#{available}
+        where id=#{id}
+    </update>
+    <update id="changePassword">
+        update user set password=#{password}, salt=#{salt} where id=#{id}
+    </update>
+    <delete id="deleteUser">
+        delete from user where id=#{id}
+    </delete>
     <select id="findUserByUsername" resultType="User">
         select *
         from user
@@ -18,5 +28,29 @@
         select count(*)
         from user
         where username = #{username}
+    </select>
+    <select id="findAll" resultType="User">
+        select * from user
+        <where>
+            <if test="username != null and username != ''">
+                and username like concat('%',concat(#{username},'%'))
+            </if>
+            <if test="realname != null and realname != ''">
+                and realname like concat('%',concat(#{realname},'%'))
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="username != null and username != ''">
+                and username like concat('%',concat(#{username},'%'))
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="available != null">
+                and available = #{available}
+            </if>
+        </where>
+
     </select>
 </mapper>

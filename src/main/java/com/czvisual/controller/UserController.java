@@ -9,6 +9,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,12 @@ public class UserController {
     public String defaultMapping() {
         return "redirect:/index";
     }
+
     @RequestMapping("toLogin")
     public String toLogin() {
         return "view/login";
     }
+
     @RequestMapping("toRegister")
     public String register() {
         return "view/register";
@@ -66,17 +69,16 @@ public class UserController {
 
     @RequestMapping("register")
     @ResponseBody
-    public Object addUser(User user){
+    public Object addUser(User user) {
         int i1 = userService.checkUser(user);
-        if(i1==1){
+        if (i1 == 1) {
             return "当前登陆名已存在";
-        }else {
+        } else {
             //加盐
             String salt = UserCredentialsMatcher.generateSalt(6);
             //MD5加密迭代两次
             user.setPassword(UserCredentialsMatcher.encryptPassword("md5", user.getPassword(), salt, 2));
             user.setSalt(salt);
-            System.out.println(salt);
             int i = userService.addUser(user);
             if (i > 0) {
                 return "注册成功";
@@ -93,13 +95,48 @@ public class UserController {
     }
 
     @RequestMapping("/user/manageUser")
-    public String manageUser(Model model){
+    public String manageUser(Model model) {
         return "view/user/manageUser.html";
     }
 
     @RequestMapping("/user/updateProfile")
-    public String updateProfile(Model model){
+    public String updateProfile(Model model) {
         return "view/user/updateProfile.html";
     }
 
+    @RequestMapping("/user/changePassword")
+    @ResponseBody
+    public String changePassword(@DefaultValue("123456") String password) {
+        String salt = UserCredentialsMatcher.generateSalt(6);
+        //MD5加密迭代两次
+        String newPassword = UserCredentialsMatcher.encryptPassword("md5", password, salt, 2);
+        int i = userService.changePassword(newPassword, salt);
+        if (i > 0) {
+            return "修改成功";
+        } else {
+            return "修改失败";
+        }
+    }
+
+    @RequestMapping("/user/updateUser")
+    @ResponseBody
+    public String updateUser(User user) {
+        int i = userService.updateUser(user);
+        if (i > 0) {
+            return "修改成功";
+        } else {
+            return "修改失败";
+        }
+    }
+
+    @RequestMapping("/user/updateUser")
+    @ResponseBody
+    public String deleteUser(int id) {
+        int i = userService.deleteUser(id);
+        if (i > 0) {
+            return "修改成功";
+        } else {
+            return "修改失败";
+        }
+    }
 }
