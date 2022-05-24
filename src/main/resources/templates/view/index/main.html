@@ -6,40 +6,47 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
     <style>
-        .container{
-          position: absolute;
+        .container {
+            position: absolute;
         }
-        .work{
+
+        .work {
             margin-top: 100px;
             width: 160px;
             height: 160px;
-            border: 1px solid rgb(232,232,232);
+            border: 1px solid rgb(232, 232, 232);
             float: left;
             border-radius: 3px;
-            background: rgb(65,178,166);
+            background: rgb(65, 178, 166);
         }
-        #work2{
+
+        #work2 {
             position: absolute;
             left: 400px;
         }
-        #work1{
+
+        #work1 {
             position: absolute;
             left: 100px;
         }
-        #work3{
+
+        #work3 {
             position: absolute;
             left: 700px;
         }
-        #work4{
+
+        #work4 {
             position: absolute;
             left: 1000px;
         }
-        .img{
+
+        .img {
             margin-top: 30px;
             margin-left: 40px;
         }
-        .num{
-            margin-left:50px;
+
+        .num {
+            margin-left: 50px;
             margin-top: 15px;
             color: #fff;
         }
@@ -51,31 +58,31 @@
     <div class="work" id="work1">
         <div class="row">
             <div class="img">
-                <a><img th:src="@{/images/one.jpg}"/></a>
+                <a><img th:src="@{/images/one.png}"/></a>
             </div>
-            <div class="num"><h5>温泉信息&nbsp;</h5></div>
+            <div class="num"><h5>温泉管理&nbsp;</h5></div>
         </div>
     </div>
     <div class="work" id="work2">
         <div class="row">
             <div class="img">
-                <a><img th:src="@{/images/one.jpg}"/></a>
+                <a><img class="layui-icon-template" th:src="@{/images/two.png}"/></a>
             </div>
-            <div class="num"><h5>系统管理&nbsp;</h5></div>
+            <div class="num"><h5>数据管理&nbsp;</h5></div>
         </div>
     </div>
     <div class="work" id="work3">
         <div class="row">
             <div class="img">
-                <a><img th:src="@{/images/one.jpg}"/></a>
+                <a><img th:src="@{/images/three.png}"/></a>
             </div>
-            <div class="num"><h5>统计管理&nbsp;</h5></div>
+            <div class="num"><h5>图表分析&nbsp;</h5></div>
         </div>
     </div>
     <div class="work" id="work4">
         <div class="row">
             <div class="img">
-                <a><img th:src="@{/images/one.jpg}"/></a>
+                <a><img th:src="@{/images/four.png}"/></a>
             </div>
             <div class="num"><h5>用户管理&nbsp;</h5></div>
         </div>
@@ -83,7 +90,7 @@
 </div>
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
-    layui.use([ 'jquery', 'layer', 'form', 'table'  ], function() {
+    layui.use(['jquery', 'layer', 'form', 'table'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;

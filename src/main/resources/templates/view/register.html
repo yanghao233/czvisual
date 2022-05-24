@@ -35,6 +35,7 @@
                     });
                 } else {
                     $.ajax({
+                        url: "/user/isNameExist",
                         method: "post",
                         data: {
                             "username": $("#username").val()
@@ -42,7 +43,7 @@
                         success: function (data) {
                             //验证返回的数据类型应该是bool
                             //用户名已经被占用返回false，如果用户名没有被占用就返回true
-                            if (data) {
+                            if (data == "false") {
                                 layui.use('layer', function () {
                                     layer = layui.layer;
                                     layer.msg("该用户名可以使用！！！", {
