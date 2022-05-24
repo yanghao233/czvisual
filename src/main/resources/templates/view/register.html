@@ -124,7 +124,7 @@
 <body class="loginBody">
 
 <form class="layui-form" style="height: auto" id="registerForm" action="register">
-    <div class="login_face"><img src="../images/timg.png" class="userAvatar"></div>
+    <div class="login_face"><img th:src="@{/images/timg.png}" class="userAvatar"></div>
     <div class="layui-form-item input-item">
         <label>用户名</label>
         <input type="text" id="username" placeholder="用户名" autocomplete="off" name="username" class="layui-input"
@@ -157,6 +157,9 @@
             </a>
         </div>
 
+        <!-- -->
+        <!--<div class="g-recaptcha form-group" data-sitekey="6LcJ2QwgAAAAAJrWT5LeJLMJHZccLj3UCc43mKr6" ></div>-->
+
         <!--        <div class="layui-form-mid layui-word-aux">请输入验证码</div>-->
         <!--验证码码的路径后面更换成后端来的流-->
 
@@ -170,6 +173,7 @@
 
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script src="https://www.recaptcha.net/recaptcha/api.js?hl=zh-CN" async defer></script>
 <script type="text/javascript">
     layui.use(['form', 'layer', 'jquery'], function () {
         var form = layui.form,
