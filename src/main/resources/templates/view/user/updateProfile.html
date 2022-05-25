@@ -76,7 +76,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">输入旧密码</label>
                 <div class="layui-input-block">
-                    <!--                    <input type="hidden" id="loginname" th:value="${usersLogin.get(0).getLoginname()}" name="loginname"/>-->
+<!--                    <input type="hidden" id="loginname" th:value="${usersLogin.get(0).getLoginname()}" name="loginname"/>-->
                     <input type="hidden" id="loginname" value="1" name="loginname"/>
                     <input type="password" id="jpwd" name="pwd" lay-verify="title" autocomplete="off"
                            placeholder="请输入旧密码" class="layui-input">
@@ -170,7 +170,7 @@
                 })
                 return false;
             }
-            $.post("user/editPwd", {loginname: loginname, pwd: pwd, pwd1: pwd1}, function (obj) {
+            $.post("/user/changePassword", {loginname: loginname, pwd: pwd, pwd1: pwd1}, function (obj) {
                 if (obj == 1) {
                     setTimeout(function () {
                         window.parent.location.href = "../toLogin";//#设定跳转的链接地址

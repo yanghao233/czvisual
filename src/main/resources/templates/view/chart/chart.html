@@ -1,9 +1,256 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>图表</title>
+    <title>数据可视化分析</title>
+    <!--    引入可视化组件-->
+    <script th:src="@{/js/echarts.min.js}"></script>
+
+    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+
+    <!--    引入layui相关的组件-->
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <!--    <link rel="stylesheet" th:href="@{/laydate/theme/default/laydate.css}" media="all"/>-->
+    <script th:src="@{/layui/layui.js}"></script>
+    <!--    <script th:src="@{/laydate/laydate.js}"></script>-->
+
+    <!--    引入bootstrap的相关组件-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" media="all"/>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <script>
+        /*var zzmwd = ['40.0', '39.4', '37.3', '42.1', '46.3', '32.8', '31.0', '43.2', '49.0', '31.0'];
+        var hjwd = ['28.0', '32.4', '24.0', '23.5', '20.0', '28.8', '31.2', '35.6', '21.6', '27.8'];
+        var wbgt = ['35.4', '30.0', '39.4', '31.5', '24.9', '30.4', '40.5', '45.8', '32.5', '27.4'];
+        var temperature = echarts.init($("#temperature")[0]);
+        var temperature_option = {
+            //设置线条的颜色
+            color: ['pink', 'green', 'blue'],
+            //标题
+            title: {
+                text: '温度'
+            },
+            //图标的提示框组件
+            tooltip: {
+                //触发方式
+                trigger: 'axis'
+            },
+            //图例组件
+            legend: {
+                //series中如果有了name，那么这里面的data可以删掉
+                data: ['掌子面温度', '环境温度', 'WBGT指标']
+            },
+            //网格配置可以控制图标的大小
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '10%',
+                //是否显示刻度标签
+                containLabel: true
+            },
+            //工具箱组件，可以保存为图片等功能
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            //设置x轴的相关设置
+            xAxis: {
+                // type: "categroy",
+                // //线条和坐标轴是否有缝隙
+                // boundaryGap:false,
+                data: dateArray
+            },
+            yAxis: {},
+            //系列图标配置，决定显示那种类型的图标
+            series: [
+                {
+                    name: '掌子面温度',
+                    type: 'line',
+                    data: zzmwd
+                },
+
+                {
+                    name: '环境温度',
+                    type: 'line',
+                    data: hjwd
+                },
+
+                {
+                    name: 'WBGT指标',
+                    type: 'line',
+                    data: wbgt
+                }
+            ]
+        };
+        //将option给myChart，把配置项给实例化对象
+        temperature.setOption(temperature_option);
+    });*/
+    </script>
 </head>
 <body>
-图表
+<form class="form-inline" style="margin: 30px">
+    <div class="form-group">
+        <label for="startTime">起始时间</label>
+        <input class="form-control" id="startTime">
+    </div>
+    <div class="form-group">
+        <label for="endTime">结束时间</label>
+        <input class="form-control" id="endTime">
+    </div>
+    <button type="button" id="time_btn" class="btn btn-default">确认</button>
+</form>
+<!--显示图表的容器-->
+<div id="temperature" style="width: 1000px ;height: 650px;"></div>
+
+<script>
+    var dateArray = ['3月1', '3月2', '3月3', '3月4', '3月5', '3月6', '3月7', '3月8', '3月9', '3月10'];
+    var title_temperature = '温度/℃';
+
+    var zzmwd = ['40.0', '39.4', '37.3', '42.1', '46.3', '32.8', '31.0', '43.2', '49.0', '31.0'];
+    var hjwd = ['28.0', '32.4', '24.0', '23.5', '20.0', '28.8', '31.2', '35.6', '21.6', '27.8'];
+    var wbgt = ['35.4', '30.0', '39.4', '31.5', '24.9', '30.4', '40.5', '45.8', '32.5', '27.4'];
+    var chart = echarts.init($("#temperature")[0]);
+
+
+    //将option给myChart，把配置项给实例化对象
+    // chart.setOption(temperature_option);
+
+    //究极简陋版,有时间再改吧,js的date类型可以自己纠正日期不正确的问题，所以这样也是对的
+    function getNextDay(date) {
+        var date1 = new Date(date.toString());
+        var day = date.getDate();
+        if (day == 31) {
+            date1.setDate(1);
+            date1.setMonth(date1.getMonth() + 1);
+        } else {
+            date1.setDate(day + 1);
+        }
+        return date1;
+    }
+
+    layui.use(['laydate', 'layer'], function () {
+        var laydate = layui.laydate;
+        var layer = layui.layer
+        laydate.render({
+            elem: '#startTime'
+        });
+        laydate.render({
+            elem: '#endTime'
+        });
+
+        $("#time_btn").click(function () {
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+
+            if (startTime == "" || endTime == "") {
+                layer.msg("要先选择时间哦！！！", {
+                    icon: 2,
+                    shift: 6
+                });
+            } else {
+                var startDate = new Date(startTime);
+                var endDate = new Date(endTime);
+
+                if (startDate.getFullYear() > endDate.getFullYear()) {
+                    layer.msg("起始时间要在结束时间之前哦！！！", {
+                        icon: 2,
+                        shift: 6
+                    });
+                } else if (startDate.getMonth() > endDate.getMonth()) {
+                    layer.msg("起始时间要在结束时间之前哦！！！", {
+                        icon: 2,
+                        shift: 6
+                    });
+                } else if (startDate.getMonth() == endDate.getMonth() && startDate.getDate() > endDate.getDate()) {
+                    layer.msg("起始时间要在结束时间之前哦！！！", {
+                        icon: 2,
+                        shift: 6
+                    });
+                } else {
+                    if (startDate.getFullYear() != endDate.getFullYear() || endDate.getMonth() - startDate.getMonth() > 1) {
+                        layer.msg("时间跨度过大哦,一次最多展示20天的数据", {
+                            icon: 2,
+                            shift: 6
+                        });
+                    } else if (startDate.getMonth() == endDate.getMonth() && endDate.getDate() - startDate.getDate() >= 20) {
+                        layer.msg("时间跨度过大哦,一次最多展示20天的数据", {
+                            icon: 2,
+                            shift: 6
+                        });
+                    } else if (endDate.getMonth() - startDate.getMonth() == 1 && (endDate.getDate() + 30) - startDate.getDate() >= 20) {
+                        layer.msg("时间跨度过大哦,一次最多展示20天的数据", {
+                            icon: 2,
+                            shift: 6
+                        });
+                    } else {
+                        dateArray = [];
+                        while (startDate.toDateString() != endDate.toDateString()) {
+                            var str = (startDate.getMonth() + 1) + "月" + startDate.getDate()
+                            dateArray.push(str);
+                            startDate = getNextDay(startDate);
+                        }
+                        dateArray.push((endDate.getMonth() + 1) + "月" + endDate.getDate());
+                        console.log(dateArray);
+                        chart.setOption(temperature_option);
+                    }
+                }
+            }
+        });
+    });
+    var temperature_option = {
+        //设置线条的颜色
+        color: ['pink', 'green', 'blue'],
+        //标题
+        title: {
+            text: title_temperature
+        },
+        //图标的提示框组件
+        tooltip: {
+            //触发方式
+            trigger: 'axis'
+        },
+        //图例组件
+        legend: {
+            //series中如果有了name，那么这里面的data可以删掉
+            data: ['掌子面温度', '环境温度', 'WBGT指标']
+        },
+        //网格配置可以控制图标的大小
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        //工具箱组件，可以保存为图片等功能
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        //设置x轴的相关设置
+        xAxis: {
+            data: dateArray
+        },
+        yAxis: {},
+        //系列图标配置，决定显示那种类型的图标
+        series: [
+            {
+                name: '掌子面温度',
+                type: 'line',
+                data: zzmwd
+            },
+            {
+                name: '环境温度',
+                type: 'line',
+                data: hjwd
+            },
+            {
+                name: 'WBGT指标',
+                type: 'line',
+                data: wbgt
+            }
+        ]
+    };
+</script>
 </body>
 </html>
