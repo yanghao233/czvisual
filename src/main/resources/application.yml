@@ -7,10 +7,10 @@ spring:
       static-locations: classpath:/static/
   # 配置 MySQL
   datasource:
-#    url: jdbc:mysql://aedfh.tpddns.cn:9306/czvisual?serverTimezone=UTC
-    url: jdbc:mysql://127.0.0.1:3306/czvisual?serverTimezone=UTC
+    url: jdbc:mysql://aedfh.tpddns.cn:9306/czvisual?serverTimezone=UTC
+#    url: jdbc:mysql://127.0.0.1:3306/czvisual?serverTimezone=UTC
     username: root
-    password: alaiyulong
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 # 配置 MyBatis
