@@ -200,10 +200,48 @@
                     var new_temperature_option = temperature_option;
                     new_temperature_option.xAxis.data = dateArray;
 
-                    //ajax的代码就写这
-                    // $.ajax();
+                    //ajax的代码就写这，后端写好之后记得给ajax函数加上url
+                    //ajax这主要是根据传入不同的时间测评数据库中获取相应的数据，修改zzmwd,hjwd,wbgt指标，一次性获取到4和5的，以json的格式返回
+                    //json的格式为
+                    /*{
+                        h4:{
+                            zzmwd = [];
+                            hgwd = [];
+                            wbgt = [];
+                        }
+                        h5:
+                        {
+                            zzmwd = [];
+                            hgwd = [];
+                            wbgt = [];
+                        }
+                    }*/
+                    /*$.ajax({
+                        method: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            zzmwd4 = data.h4.zzmwd;
+                            hjwd4 = data.h4.hjwd;
+                            wbgt4 = data.h4.wbgt;
 
+                            zzmwd5 = data.h5.zzmwd;
+                            hjwd5 = data.h5.hjwd;
+                            wbgt5 = data.h5.wbgt;
 
+                            if (temperature_option.title.text == "温度/℃(4#)") {
+                                temperature_option.series[0].data = zzmwd4;
+                                temperature_option.series[1].data = hjwd4;
+                                temperature_option.series[2].data = wbgt4;
+                            }else {
+                                temperature_option.series[0].data = zzmwd5;
+                                temperature_option.series[1].data = hjwd5;
+                                temperature_option.series[2].data = wbgt5;
+                            }
+                            chart.setOption(new_temperature_option);
+                        }
+                    });*/
+
+                    //ajax完善之后下面这一行就可以注释掉了
                     chart.setOption(new_temperature_option);
 
                 }
@@ -214,6 +252,7 @@
             temperature_option.series[0].data = zzmwd5;
             temperature_option.series[1].data = hjwd5;
             temperature_option.series[2].data = wbgt5;
+            temperature_option.title.text = '温度/℃(5#)';
 
             chart.setOption(temperature_option);
         });
@@ -222,6 +261,7 @@
             temperature_option.series[0].data = zzmwd4;
             temperature_option.series[1].data = hjwd4;
             temperature_option.series[2].data = wbgt4;
+            temperature_option.title.text = '温度/℃(4#)';
 
             chart.setOption(temperature_option);
         });
