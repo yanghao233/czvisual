@@ -1,21 +1,23 @@
-package com.czvisual;
+package com.czvisual.entity;
 
 
-import java.util.Date;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
 
 public class Data {
-    private Date date;
+    @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
+    private String date;
     private float zzmlc;
     private String time;
     private float zzmMiddle;
     private float zzmLeft;
     private float zzmRight;
     private float zzmAverage;
+    private float zzmWater;
     private float zzmFlowRate;
     private float temp1;
     private float temp2;
     private float temp3;
-    private float tmpAverage;
+    private float tempAverage;
     private float moisture1;
     private float moisture2;
     private float moisture3;
@@ -30,11 +32,11 @@ public class Data {
     private String description;
     private float depth;
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -118,12 +120,12 @@ public class Data {
         this.temp3 = temp3;
     }
 
-    public float getTmpAverage() {
-        return tmpAverage;
+    public float getTempAverage() {
+        return tempAverage;
     }
 
-    public void setTmpAverage(float tmpAverage) {
-        this.tmpAverage = tmpAverage;
+    public void setTempAverage(float tempAverage) {
+        this.tempAverage = tempAverage;
     }
 
     public float getMoisture1() {
@@ -228,5 +230,45 @@ public class Data {
 
     public void setDepth(float depth) {
         this.depth = depth;
+    }
+
+    public float getZzmWater() {
+        return zzmWater;
+    }
+
+    public void setZzmWater(float zzmWater) {
+        this.zzmWater = zzmWater;
+    }
+
+    @Override
+    public String toString() {
+        return "Data{" +
+                "date=" + date +
+                ", zzmlc=" + zzmlc +
+                ", time='" + time + '\'' +
+                ", zzmMiddle=" + zzmMiddle +
+                ", zzmLeft=" + zzmLeft +
+                ", zzmRight=" + zzmRight +
+                ", zzmAverage=" + zzmAverage +
+                ", zzmWater=" + zzmWater +
+                ", zzmFlowRate=" + zzmFlowRate +
+                ", temp1=" + temp1 +
+                ", temp2=" + temp2 +
+                ", temp3=" + temp3 +
+                ", tmpAverage=" + tempAverage +
+                ", moisture1=" + moisture1 +
+                ", moisture2=" + moisture2 +
+                ", moisture3=" + moisture3 +
+                ", moistureAverage=" + moistureAverage +
+                ", wbgt1=" + wbgt1 +
+                ", wbgt2=" + wbgt2 +
+                ", wbgt3=" + wbgt3 +
+                ", wbgtAverage=" + wbgtAverage +
+                ", dkFlowRate=" + dkFlowRate +
+                ", status='" + status + '\'' +
+                ", basis='" + basis + '\'' +
+                ", description='" + description + '\'' +
+                ", depth=" + depth +
+                '}';
     }
 }
