@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czvisual.mapper.DataMapper">
+
+    <insert id="insertData" parameterType="Data">
+        insert into ${table}(date, zzmlc, time, zzmMiddle, zzmLeft, zzmRight, zzmAverage, zzmWater, zzmFlowRate,
+                             temp1, temp2, temp3, tempAverage, moisture1, moisture2, moisture3, moistureAverage,
+                             wbgt1, wbgt2, wbgt3, wbgtAverage, dkFlowRate, status, basis, description, depth)
+        values (#{data.date}, #{data.zzmlc}, #{data.time}, #{data.zzmMiddle}, #{data.zzmLeft}, #{data.zzmRight},
+                #{data.zzmAverage}, #{data.zzmWater}, #{data.zzmFlowRate}, #{data.temp1}, #{data.temp2}, #{data.temp3},
+                #{data.tempAverage}, #{data.moisture1}, #{data.moisture2}, #{data.moisture3}, #{data.moistureAverage},
+                #{data.wbgt1}, #{data.wbgt2}, #{data.wbgt3}, #{data.wbgtAverage}, #{data.dkFlowRate}, #{data.status},
+                #{data.basis}, #{data.description}, #{data.depth})
+    </insert>
+    <insert id="insertDataBatch" parameterType="java.util.List">
+        insert into ${table}(date, zzmlc, time, zzmMiddle, zzmLeft, zzmRight, zzmAverage, zzmWater, zzmFlowRate,
+        temp1, temp2, temp3, 
+                             tempAverage, moisture1, moisture2, moisture3, moistureAverage,
+        wbgt1, wbgt2, wbgt3, wbgtAverage, dkFlowRate, status, basis, description, depth)
+        values
+        <foreach collection="dataList" item="data" separator=",">
+            (#{data.date}, #{data.zzmlc}, #{data.time}, #{data.zzmMiddle}, #{data.zzmLeft}, #{data.zzmRight},
+            #{data.zzmAverage}, #{data.zzmWater}, #{data.zzmFlowRate}, #{data.temp1}, #{data.temp2}, #{data.temp3},
+            #{data.tempAverage}, #{data.moisture1}, #{data.moisture2}, #{data.moisture3}, #{data.moistureAverage},
+            #{data.wbgt1}, #{data.wbgt2}, #{data.wbgt3}, #{data.wbgtAverage}, #{data.dkFlowRate}, #{data.status},
+            #{data.basis}, #{data.description}, #{data.depth})
+        </foreach>
+    </insert>
+</mapper>
