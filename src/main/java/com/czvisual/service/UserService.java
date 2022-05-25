@@ -16,6 +16,10 @@ public class UserService {
         return userMapper.findUserByUsername(username);
     }
 
+    public User findUserByUserId(int id) {
+        return userMapper.findUserByUserId(id);
+    }
+
     public int checkUser(User user) {
         return userMapper.checkUser(user.getUsername());
     }

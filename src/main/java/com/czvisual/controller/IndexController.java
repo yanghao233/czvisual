@@ -1,11 +1,11 @@
 package com.czvisual.controller;
 
-import com.czvisual.entity.TreeNode;
 import com.czvisual.entity.User;
 import com.czvisual.service.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SessionKey;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,25 +29,34 @@ public class IndexController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    DefaultWebSessionManager sessionManager;
+
     @RequestMapping("/session")
     @ResponseBody
     public String session() {
-        String tmp = "<pre>";
-        Enumeration<String> e = session.getAttributeNames();
-        while (e.hasMoreElements()) {
-            String t = e.nextElement();
-            tmp += t + " " + session.getAttribute(t);
-            tmp += "<br>";
+        //String tmp = "<pre>";
+        //Enumeration<String> e = session.getAttributeNames();
+        //while (e.hasMoreElements()) {
+        //    String t = e.nextElement();
+        //    tmp += t + " " + session.getAttribute(t);
+        //    tmp += "<br>";
+        //}
+        //tmp += "<hr>";
+        //Session session2 = SecurityUtils.getSubject().getSession();
+        //Iterator<Object> it = session2.getAttributeKeys().iterator();
+        //while(it.hasNext()){
+        //    String t = (String) it.next();
+        //    tmp += t+session2.getAttribute(t)+"<br>";
+        //}
+        Collection<Session> actsessions = sessionManager.getSessionDAO().getActiveSessions();
+        Iterator<Session> it = actsessions.iterator();
+        while (it.hasNext()){
+            Session ss = it.next();
+            ((User)ss.getAttribute("user")).getId();
+            ss.stop();
         }
-        tmp += "<hr>";
-        Session session2 = SecurityUtils.getSubject().getSession();
-        Iterator<Object> it = session2.getAttributeKeys().iterator();
-        while(it.hasNext()){
-            String t = (String) it.next();
-            tmp += t+session2.getAttribute(t)+"<br>";
-        }
-
-        return tmp;
+        return null;
     }
 
     @RequestMapping("")

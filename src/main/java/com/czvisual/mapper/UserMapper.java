@@ -9,6 +9,8 @@ import java.util.List;
 public interface UserMapper {
     User findUserByUsername(String username);
 
+    User findUserByUserId(int id);
+
     int checkUser(String username);
 
     int addUser(User user);
@@ -20,4 +22,5 @@ public interface UserMapper {
     int changePassword(int id, String password, String salt);
 
     int deleteUser(int id);
+
 }

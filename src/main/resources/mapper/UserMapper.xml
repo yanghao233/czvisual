@@ -24,6 +24,11 @@
         from user
         where username = #{username}
     </select>
+    <select id="findUserByUserId" resultType="User">
+        select *
+        from user
+        where id = #{id}
+    </select>
     <select id="checkUser" resultType="Integer">
         select count(*)
         from user
