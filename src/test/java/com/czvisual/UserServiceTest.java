@@ -33,10 +33,10 @@ public class UserServiceTest {
         System.out.println(userService.findUserByUsername(username));
     }
 
-    @Test
+/*    @Test
     public void changePassword() {
         System.out.println(userController.changePassword(2, "123456"));
-    }
+    }*/
 
     @Test
     public void updateUser() {
