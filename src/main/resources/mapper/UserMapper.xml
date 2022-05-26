@@ -14,7 +14,7 @@
         where id=#{id}
     </update>
     <update id="changePassword">
-        update user set password=#{password}, salt=#{salt} where username=#{username}
+        update user set password=#{password}, salt=#{salt} where id=#{id}
     </update>
     <delete id="deleteUser">
         delete from user where id=#{id}
@@ -38,7 +38,7 @@
         select * from user
         <where>
             <if test="username != null and username != ''">
-                and username like concat('%',concat(#{username},'%'))
+                 username like concat('%',concat(#{username},'%'))
             </if>
             <if test="realname != null and realname != ''">
                 and realname like concat('%',concat(#{realname},'%'))
@@ -46,8 +46,8 @@
             <if test="sex != null">
                 and sex = #{sex}
             </if>
-            <if test="username != null and username != ''">
-                and username like concat('%',concat(#{username},'%'))
+            <if test="position != null and position != ''">
+                and position like concat('%',concat(#{position},'%'))
             </if>
             <if test="type != null">
                 and type = #{type}

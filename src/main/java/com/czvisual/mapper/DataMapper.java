@@ -10,4 +10,6 @@ public interface DataMapper {
     int insertData(Data data, String table);
 
     int insertDataBatch(List<Data> dataList, String table);
+
+    List<Data> getAllData(String startDate, String endDate, String table);
 }

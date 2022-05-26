@@ -1,6 +1,7 @@
 package com.czvisual.entity;
 
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 
 public class Data {
@@ -31,6 +32,8 @@ public class Data {
     private String basis;
     private String description;
     private float depth;
+    @ExcelIgnore
+    private String table;
 
     public String getDate() {
         return date;
@@ -238,6 +241,14 @@ public class Data {
 
     public void setZzmWater(float zzmWater) {
         this.zzmWater = zzmWater;
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
     }
 
     @Override

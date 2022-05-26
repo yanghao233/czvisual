@@ -19,4 +19,8 @@ public class DataService {
     public int insertDataBatch(List<Data> dataList, String table) {
         return dataMapper.insertDataBatch(dataList, table);
     }
+
+    public List<Data> getAllData(String startDate, String endDate, String table) {
+        return dataMapper.getAllData(startDate, endDate, table);
+    }
 }

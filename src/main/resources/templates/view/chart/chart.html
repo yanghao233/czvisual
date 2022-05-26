@@ -2,18 +2,12 @@
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>数据可视化分析---温度</title>
-    <!--    引入可视化组件-->
     <script th:src="@{/js/echarts.min.js}"></script>
-
     <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-
-    <!--    引入layui相关的组件-->
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <!--    <link rel="stylesheet" th:href="@{/laydate/theme/default/laydate.css}" media="all"/>-->
     <script th:src="@{/layui/layui.js}"></script>
     <!--    <script th:src="@{/laydate/laydate.js}"></script>-->
-
-    <!--    引入bootstrap的相关组件-->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" media="all"/>
     <script th:src="@{/js/bootstrap.min.js}"></script>
 
@@ -39,57 +33,48 @@
                 选择隧道
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li>
-                    <a id="4h">4#</a>
-                </li>
-                <li>
-                    <a id="5h">5#</a>
-                </li>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="dropdownMenu2">
             </ul>
         </div>
-
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-9">
-        <!--显示图表的容器-->
-        <div id="temperature" style="width: 1000px ;height: 650px;"></div>
+    <div class="col-md-10">
+        <div row>
+            <div class="col-md-5" style="margin-right: 30px; margin-bottom: 10px">
+                <div id="chart1" style="width: 600px; height:400px"></div>
+            </div>
+            <div class="col-md-5">
+                <div id="chart2" style="width: 600px; height:400px; margin-bottom: 10px"></div>
+            </div>
+        </div>
+        <div row>
+            <div class="col-md-5" style="margin-right: 30px">
+                <div id="chart3" style="width: 600px; height:400px"></div>
+            </div>
+            <div class="col-md-5">
+                <div id="chart4" style="width: 600px; height:400px"></div>
+            </div>
+        </div>
     </div>
 </div>
+
+
 <script>
-    var dateArray = ['3月15', '3月16', '3月17', '3月18', '3月19', '3月20', '3月21', '3月22', '3月23', '3月24'];
-    var title_temperature = '温度/℃(4#)';
 
-    var zzmwd4 = ['58', '49.2', '43.1', '41.3', '44.1', '55.3', '52.4', '53.9', '43.2', '50.5'];
-    var zzmwd5 = ['48.5', '53.8', '53.2', '49.5', '51.1', '57.7', '56.3', '63.8', '56.6', '60'];
-
-    var hjwd4 = ['35.3', '33.4', '34.1', '24.9', '35.1', '33.8', '33.2', '36.2', '30.6', '41.6'];
-    var hjwd5 = ['31.9', '34.2', '47.1', '40.2', '43.8', '44.5', '43.1', '41.1', '30.2', '34.5'];
-
-    var wbgt4 = ['', '', '', '', '29.4', '21.8', '37.8', '30.5', '28.4', '36.6'];
-    var wbgt5 = ['', '', '', '', '28.2', '35.2', '35.3', '32.7', '35.1', '32.8'];
-
-
-    var chart = echarts.init($("#temperature")[0]);
-
-    var temperature_option = {
-        //设置线条的颜色
-        color: ['pink', 'green', 'blue'],
-        //标题
+    var option1 = {
         title: {
-            text: title_temperature
+            text: '掌子面里程散点图'
         },
-        //图标的提示框组件
         tooltip: {
-            //触发方式
             trigger: 'axis'
         },
-        //图例组件
         legend: {
-            //series中如果有了name，那么这里面的data可以删掉
-            data: ['掌子面温度', '环境温度', 'WBGT指标']
+            data: ['掌子面里程']
         },
-        //网格配置可以控制图标的大小
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
         grid: {
             left: '3%',
             right: '4%',
@@ -97,57 +82,167 @@
             //是否显示刻度标签
             containLabel: true
         },
-        //工具箱组件，可以保存为图片等功能
+        xAxis: {
+            data: []
+        },
+        yAxis: {
+            min : 0,
+            max : 0
+        },
+        series: [
+            {
+                name: '掌子面里程',
+                type: 'scatter',
+                data: []
+            }
+        ]
+    };
+
+    var option2 = {
+        color: ['pink', 'green', 'blue'],
+        title: {
+            text: '掌子面左中右温度折线图'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['左', '中', '右']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
         toolbox: {
             feature: {
                 saveAsImage: {}
             }
         },
-        //设置x轴的相关设置
         xAxis: {
-            // type: "categroy",
-            // //线条和坐标轴是否有缝隙
-            // boundaryGap:false,
-            data: dateArray
+            data: []
         },
-        yAxis: {},
-        //系列图标配置，决定显示那种类型的图标
+        yAxis: {
+            min : 0,
+            max : 0
+        },
         series: [
             {
-                name: '掌子面温度',
+                name: '左',
                 type: 'line',
                 smooth: true,
-                data: zzmwd4
+                data: []
             },
+            {
+                name: '中',
+                type: 'line',
+                smooth: true,
+                data: []
+            },
+            {
+                name: '右',
+                type: 'line',
+                smooth: true,
+                data: []
+            }
+        ]
+    };
+
+    var option3= {
+        color: ['pink'],
+        title: {
+            text: '掌子面湿度折线图'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['湿度']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            data: []
+        },
+        yAxis: {
+            min : 0,
+            max : 0
+        },
+        series: [
+            {
+                name: '湿度',
+                type: 'line',
+                smooth: true,
+                data: []
+            }
+        ]
+    };
+
+    var option4 = {
+        color: ['green', 'blue'],
+        title: {
+            text: '掌子面环境温度和wbgt折线图'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['环境温度', 'wbgt']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            data: []
+        },
+        yAxis: {
+            min : 0,
+            max : 0
+        },
+        series: [
             {
                 name: '环境温度',
                 type: 'line',
                 smooth: true,
-                data: hjwd4
+                data: []
             },
             {
-                name: 'WBGT指标',
+                name: 'wbgt',
                 type: 'line',
                 smooth: true,
-                data: wbgt4
+                data: []
             }
         ]
     };
-    //将option给myChart，把配置项给实例化对象
-    chart.setOption(temperature_option);
 
-    //究极简陋版,有时间再改吧,js的date类型可以自己纠正日期不正确的问题，所以这样也是对的
-    function getNextDay(date) {
-        var date1 = new Date(date.toString());
-        var day = date.getDate();
-        if (day == 31) {
-            date1.setDate(1);
-            date1.setMonth(date1.getMonth() + 1);
-        } else {
-            date1.setDate(day + 1);
-        }
-        return date1;
-    }
+
+    var chart1 = echarts.init($("#chart1")[0]);
+    var chart2 = echarts.init($("#chart2")[0]);
+    var chart3 = echarts.init($("#chart3")[0]);
+    var chart4 = echarts.init($("#chart4")[0]);
+
+    chart1.setOption(option1);
+    chart2.setOption(option2);
+    chart3.setOption(option3);
+    chart4.setOption(option4);
 
     layui.use(['laydate', 'layer'], function () {
         var laydate = layui.laydate;
@@ -159,114 +254,97 @@
             elem: '#endTime'
         });
 
-        $("#time_btn").click(function () {
-
-            var startTime = $("#startTime").val();
-            var endTime = $("#endTime").val();
-
-            if (startTime == "" || endTime == "") {
-                layer.msg("要先选择时间哦！！！", {
-                    icon: 2,
-                    shift: 6
-                });
-            } else {
-                var startDate = new Date(startTime);
-                var endDate = new Date(endTime);
-
-                if (startDate.getFullYear() > endDate.getFullYear()) {
-                    layer.msg("起始时间要在结束时间之前哦！！！", {
-                        icon: 2,
-                        shift: 6
-                    });
-                } else if (startDate.getMonth() > endDate.getMonth()) {
-                    layer.msg("起始时间要在结束时间之前哦！！！", {
-                        icon: 2,
-                        shift: 6
-                    });
-                } else if (startDate.getMonth() == endDate.getMonth() && startDate.getDate() > endDate.getDate()) {
-                    layer.msg("起始时间要在结束时间之前哦！！！", {
-                        icon: 2,
-                        shift: 6
-                    });
-                } else {
-                    dateArray = [];
-                    while (startDate.toDateString() != endDate.toDateString()) {
-                        var str = (startDate.getMonth() + 1) + "月" + startDate.getDate()
-                        dateArray.push(str);
-                        startDate = getNextDay(startDate);
-                    }
-                    dateArray.push((endDate.getMonth() + 1) + "月" + endDate.getDate());
-
-                    var new_temperature_option = temperature_option;
-                    new_temperature_option.xAxis.data = dateArray;
-
-                    //ajax的代码就写这，后端写好之后记得给ajax函数加上url
-                    //ajax这主要是根据传入不同的时间测评数据库中获取相应的数据，修改zzmwd,hjwd,wbgt指标，一次性获取到4和5的，以json的格式返回
-                    //json的格式为
-                    /*{
-                        h4:{
-                            zzmwd = [];
-                            hgwd = [];
-                            wbgt = [];
-                        }
-                        h5:
-                        {
-                            zzmwd = [];
-                            hgwd = [];
-                            wbgt = [];
-                        }
-                    }*/
-                    /*$.ajax({
-                        method: "POST",
-                        dataType: "json",
-                        success: function (data) {
-                            zzmwd4 = data.h4.zzmwd;
-                            hjwd4 = data.h4.hjwd;
-                            wbgt4 = data.h4.wbgt;
-
-                            zzmwd5 = data.h5.zzmwd;
-                            hjwd5 = data.h5.hjwd;
-                            wbgt5 = data.h5.wbgt;
-
-                            if (temperature_option.title.text == "温度/℃(4#)") {
-                                temperature_option.series[0].data = zzmwd4;
-                                temperature_option.series[1].data = hjwd4;
-                                temperature_option.series[2].data = wbgt4;
-                            }else {
-                                temperature_option.series[0].data = zzmwd5;
-                                temperature_option.series[1].data = hjwd5;
-                                temperature_option.series[2].data = wbgt5;
-                            }
-                            chart.setOption(new_temperature_option);
-                        }
-                    });*/
-
-                    //ajax完善之后下面这一行就可以注释掉了
-                    chart.setOption(new_temperature_option);
-
+        $.ajax({
+            url: "/dataManage/getAllHotspring",
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                for (var i in data) {
+                    $("#dropdownMenu2").append("<li><a id='" + data[i].tablename + "'>" + data[i].hotspringname + "</a></li>")
+                    $('#' + data[i].tablename).on('click', function (object) {
+                        getData(object.target.id);
+                    })
                 }
             }
         });
 
-        $("#5h").click(function () {
-            temperature_option.series[0].data = zzmwd5;
-            temperature_option.series[1].data = hjwd5;
-            temperature_option.series[2].data = wbgt5;
-            temperature_option.title.text = '温度/℃(5#)';
+        function getData(table) {
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+            if (startTime === "" || endTime === "") {
+                layer.msg("时间不能为空", {
+                    icon: 2,
+                    shift: 6
+                })
+                return;
+            }
+            var startDate = new Date(startTime);
+            var endDate = new Date(endTime);
+            if (startDate > endDate) {
+                layer.msg("起始时间须小于结束时间", {
+                    icon: 2,
+                    shift: 6
+                });
+            } else {
+                $.ajax({
+                    url: "/dataManage/getAllData?startDate=" + startTime + "&endDate=" + endTime + "&table=" + table,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        allDate = [];
+                        zzmlc = [];
+                        zzmLeft = [];
+                        zzmRight = [];
+                        zzmMiddle = [];
+                        moistureAverage = []
+                        tempAverage = []
+                        wbgtAverage = []
+                        for (var i in data) {
+                            allDate.push(data[i].date);
+                            zzmlc.push(data[i].zzmlc);
+                            zzmLeft.push(data[i].zzmLeft);
+                            zzmRight.push(data[i].zzmRight);
+                            zzmMiddle.push(data[i].zzmMiddle);
+                            moistureAverage.push(data[i].moistureAverage);
+                            tempAverage.push(data[i].tempAverage);
+                            wbgtAverage.push(data[i].wbgtAverage);
+                        }
 
-            chart.setOption(temperature_option);
-        });
+                        // 更新掌子面里程散点图
+                        option1.xAxis.data = allDate;
+                        option1.series[0].data = zzmlc;
+                        option1.yAxis.min = Math.min.apply(Math, zzmlc);
+                        option1.yAxis.max = Math.max.apply(Math, zzmlc);
+                        chart1.setOption(option1);
 
-        $("#4h").click(function () {
-            temperature_option.series[0].data = zzmwd4;
-            temperature_option.series[1].data = hjwd4;
-            temperature_option.series[2].data = wbgt4;
-            temperature_option.title.text = '温度/℃(4#)';
+                        // 更新掌子面中左右温度折线图
+                        option2.xAxis.data = allDate;
+                        option2.series[0].data = zzmLeft;
+                        option2.series[1].data = zzmMiddle;
+                        option2.series[2].data = zzmRight;
+                        aMin = Math.min.apply(Math, zzmLeft);
+                        aMax = Math.max.apply(Math, zzmLeft);
+                        bMin = Math.min.apply(Math, zzmMiddle);
+                        bMax = Math.max.apply(Math, zzmMiddle);
+                        cMin = Math.min.apply(Math, zzmRight);
+                        cMax = Math.max.apply(Math, zzmRight);
+                        option2.yAxis.min = Math.min(aMin, bMin, cMin);
+                        option2.yAxis.max = Math.max(aMax, bMax, cMax);
+                        chart2.setOption(option2);
 
-            chart.setOption(temperature_option);
-        });
-    })
-    ;
+                        //更新掌子面湿度折线图
+                        option3.xAxis.data = allDate;
+                        option3.series[0].data = moistureAverage;
+                        option3.yAxis.min = Math.min.apply(Math, moistureAverage);
+                        option3.yAxis.max = Math.max.apply(Math, moistureAverage);
+                        chart3.setOption(option3);
+
+                        //更新掌子面环境温度和wbgt折线图
+                        //TODO: 更新表格
+                    }
+                });
+            }
+        }})
 </script>
 </body>
 </html>

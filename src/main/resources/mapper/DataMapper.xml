@@ -28,4 +28,7 @@
             #{data.basis}, #{data.description}, #{data.depth})
         </foreach>
     </insert>
+    <select id="getAllData" resultType="Data">
+        select * from ${table} where date between #{startDate} and #{endDate}
+    </select>
 </mapper>
