@@ -1,9 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn">
 <head>
     <title>温泉总览</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <script src="/js/jquery-3.1.1.min.js"></script>
+
 </head>
 <body>
-温泉总览
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <p style="margin-left: 650px; font-size: 2em; font-weight: bold">温泉总览</p>
+</fieldset>
+<!--url传数据-->
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">普通类型</label>
+        <div class="layui-input-inline">
+            <select name="city" lay-verify="required" id="orderId1" onchange=reload()>
+                <option value=""></option>
+                <option value="0">间歇泉</option>
+                <option value="1">热水河</option>
+                <option value="2">高原沸泉</option>
+                <option value="3">亚沸泉</option>
+                <option value="4">地热蒸汽</option>
+                <option value="5">江心喷泉</option>
+                <option value="6">地热田</option>
+            </select>
+        </div>
+        <label class="layui-form-label">热害</label>
+        <div class="layui-input-inline">
+            <select name="city" lay-verify="required" id="order_id3" onchange=reload()>
+                <option value=""></option>
+                <option value="0">重热害</option>
+                <option value="1">中热害</option>
+                <option value="2">轻热害</option>
+                <option value="3">无热害</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<table id="table" lay-filter="test"></table>
+
+<script src="/layui/layui.js"></script>
+
+<script type="text/javascript" th:inline="none">
+    layui.use('table', function () {
+        var table = layui.table;
+        $.alax({
+            type:"post"
+        })
+
+        table.render({
+            elem: '#table'
+            , height: 312
+            , page: true
+            , cols: [[{field: 'id', title: '温泉名字', width: 100, fixed: 'left'}
+                , {field: 'username', title: '地域'}
+                , {field: 'sex', title: '普通类型'}
+                , {field: 'city', title: '热显示类型'}
+                , {field: 'sign', title: '热害'}
+                , {field: 'experience', title: '化学成分'}
+            ]],
+            data: [
+                {
+                    id: 1,
+                    username: 1,
+                    sex: 1,
+                    city: 1,
+                    sign: 1,
+                    experience: 1,
+
+                }
+            ]
+        });
+
+
+    });
+</script>
 </body>
 </html>
