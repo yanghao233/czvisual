@@ -52,7 +52,7 @@ public class UserServiceTest {
         System.out.println(userController.updateUser(user));
     }
 
-    @Test
+    /*@Test
     public void deleteUser() {
         System.out.println(userController.deleteUser(20));
     }
