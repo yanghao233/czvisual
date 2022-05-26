@@ -36,8 +36,8 @@ public class UserService {
         return userMapper.updateUser(user);
     }
 
-    public int changePassword(String username, String password, String salt) {
-        return userMapper.changePassword(username, password, salt);
+    public int changePassword(Integer id, String password, String salt) {
+        return userMapper.changePassword(id, password, salt);
     }
 
     public int deleteUser(int id) {

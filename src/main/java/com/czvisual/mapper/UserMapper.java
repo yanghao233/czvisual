@@ -19,7 +19,7 @@ public interface UserMapper {
 
     int updateUser(User user);
 
-    int changePassword(String username, String password, String salt);
+    int changePassword(Integer id, String password, String salt);
 
     int deleteUser(int id);
 
