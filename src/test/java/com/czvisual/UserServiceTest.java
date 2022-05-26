@@ -1,3 +1,4 @@
+/*
 package com.czvisual;
 
 
@@ -27,18 +28,23 @@ public class UserServiceTest {
         }
     }
 
-    @Test
+  */
+/*  @Test
     public void findUserByUsername() {
         String username = "1";
         System.out.println(userService.findUserByUsername(username));
-    }
+    }*//*
 
+
+*/
 /*    @Test
     public void changePassword() {
         System.out.println(userController.changePassword(2, "123456"));
-    }*/
+    }*//*
 
-    @Test
+
+   */
+/* @Test
     public void updateUser() {
         User user = new User();
         user.setUsername("test");
@@ -50,10 +56,13 @@ public class UserServiceTest {
         user.setId(15);
         user.setType(3);
         System.out.println(userController.updateUser(user));
-    }
+    }*//*
 
-    /*@Test
+
+    */
+/*@Test
     public void deleteUser() {
         System.out.println(userController.deleteUser(20));
     }
 }
+*/
