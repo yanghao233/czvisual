@@ -1,18 +1,22 @@
 package com.czvisual.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class User {
-    private int id;
+    private Integer id;
     private String username;
+    @JsonIgnore
     private String password;
     private String realname;
-    private int sex;
+    private Integer sex;
     private String phone;
     private String position;
-    private int type;
-    private int available;
+    private Integer type;
+    private Integer available;
+    @JsonIgnore
     private String salt;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -24,11 +28,11 @@ public class User {
         this.realname = realname;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
@@ -48,19 +52,19 @@ public class User {
         this.position = position;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public int getAvailable() {
+    public Integer getAvailable() {
         return available;
     }
 
-    public void setAvailable(int available) {
+    public void setAvailable(Integer available) {
         this.available = available;
     }
 
@@ -72,7 +76,7 @@ public class User {
         this.salt = salt;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
