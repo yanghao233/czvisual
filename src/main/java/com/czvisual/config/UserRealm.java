@@ -56,39 +56,42 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         HashSet<String> roles = new HashSet<>();
         HashSet<String> permissions = new HashSet<>();
-        switch (((User) principalCollection.getPrimaryPrincipal()).getType()) {
-            case 0:
-                roles.add("superAdmin");
-                permissions.add("hsManage:overview");
-                permissions.add("hsManage:tableview");
-                permissions.add("dataManage:operateHsInfo");
-                permissions.add("dataManage:operateHsData");
-                permissions.add("chartAnalysis");
-                permissions.add("user:manageUser");
-                permissions.add("user:updateProfile");
-                break;
-            case 1:
-                roles.add("recorder");
-                permissions.add("hsManage:overview");
-                permissions.add("hsManage:tableview");
-                permissions.add("dataManage:operateHsInfo");
-                permissions.add("dataManage:operateHsData");
-                permissions.add("user:updateProfile");
-                break;
-            case 2:
-                roles.add("analyst");
-                permissions.add("hsManage:overview");
-                permissions.add("hsManage:tableview");
-                permissions.add("chartAnalysis");
-                permissions.add("user:manageUser");
-                permissions.add("user:updateProfile");
-                break;
-            case 3:
-                roles.add("normalUser");
-                permissions.add("hsManage:overview");
-                permissions.add("user:updateProfile");
-                break;
+        User current = (User) principalCollection.getPrimaryPrincipal();
+        if(current.getAvailable() == 1){
+            switch (current.getType()) {
+                case 0:
+                    roles.add("superAdmin");
+                    permissions.add("hsManage:overview");
+                    permissions.add("hsManage:tableview");
+                    permissions.add("dataManage:operateHsInfo");
+                    permissions.add("dataManage:operateHsData");
+                    permissions.add("chartAnalysis");
+                    permissions.add("user:manageUser");
+                    permissions.add("user:updateProfile");
+                    break;
+                case 1:
+                    roles.add("recorder");
+                    permissions.add("hsManage:overview");
+                    permissions.add("hsManage:tableview");
+                    permissions.add("dataManage:operateHsInfo");
+                    permissions.add("dataManage:operateHsData");
+                    permissions.add("user:updateProfile");
+                    break;
+                case 2:
+                    roles.add("analyst");
+                    permissions.add("hsManage:overview");
+                    permissions.add("hsManage:tableview");
+                    permissions.add("chartAnalysis");
+                    permissions.add("user:manageUser");
+                    permissions.add("user:updateProfile");
+                    break;
+                case 3:
+                    roles.add("normalUser");
+                    permissions.add("hsManage:overview");
+                    permissions.add("user:updateProfile");
+                    break;
 
+            }
         }
         info.setRoles(roles);
         info.setStringPermissions(permissions);

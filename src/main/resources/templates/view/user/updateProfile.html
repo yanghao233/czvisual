@@ -117,10 +117,10 @@
 
                 //修改个人资料
                 $.post("/user/updateUser", params, function (obj) {
-                    layer.msg(obj);
+                    layer.msg(obj.message);
                     setTimeout(function () {
                         location.reload();
-                    }, 100)
+                    }, 500)
 
                 })
             });
@@ -161,7 +161,7 @@
                 return false;
             }
             $.post("/user/changePassword", {id: userid, pwd: pwd, pwd1: pwd1}, function (obj) {
-                if (obj == 1) {
+                if (obj.code == 1) {
                     setTimeout(function () {
                         window.parent.location.href = "/toLogin";//#设定跳转的链接地址
                     }, 3000)
