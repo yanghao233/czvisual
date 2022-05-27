@@ -250,13 +250,13 @@
         laydate.render({
             elem: '#startTime',
             done: function(value, date, endDate) {
-                getData($("#dropdownMenu1").attr("table"));
+                getData($("#dropdownMenu1").attr("table"), 0);
             }
         });
         laydate.render({
             elem: '#endTime',
             done: function(value, date, endDate) {
-                getData($("#dropdownMenu1").attr("table"));
+                getData($("#dropdownMenu1").attr("table"), 0);
             }
         });
 
@@ -271,20 +271,20 @@
                     $("#dropdownMenu2").append("<li><a id='" + data[i].tablename + "'>" + data[i].hotspringname + "</a></li>")
                     $('#' + data[i].tablename).on('click', function (object) {
                         $("#dropdownMenu1").html(object.target.text + " <span class='caret'></span>").attr("table", object.target.id);
-                        getData(object.target.id);
+                        getData(object.target.id, 1);
                     })
                 }
                 if (data.length) {
-                    getData(data[0].tablename);
+                    getData(data[0].tablename, 1);
                     $("#dropdownMenu1").html(data[0].hotspringname + " <span class='caret'></span>").attr("table", data[0].tablename);
                 }
             }
         });
 
-        function getData(table) {
+        function getData(table, type) {
             var startTime = $("#startTime").val();
             var endTime = $("#endTime").val();
-            if (startTime === "" || endTime === "") {
+            if (startTime === "" || endTime === "" || type === 1) {
                 url = "/dataManage/getAllData?table=" + table;
                 updateData(url);
                 return;
