@@ -13,4 +13,7 @@ public interface DataMapper {
 
     List<Data> getAllData(String startDate, String endDate, String table);
     List<Data> getRealAllData(String table);
+    int updateData(Data data,String table);
+
+    int delDataById(Integer id,String table);
 }

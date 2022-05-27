@@ -26,6 +26,36 @@
             #{data.basis}, #{data.description}, #{data.depth})
         </foreach>
     </insert>
+    <update id="updateData">
+        update ${table}
+        set date=#{data.date},
+            zzmlc=#{data.zzmlc},
+            time=null,
+            zzmMiddle=#{data.zzmMiddle},
+            zzmLeft=#{data.zzmLeft},
+            zzmRight=#{data.zzmRight},
+            zzmAverage=#{data.zzmAverage},
+            zzmWater=#{data.zzmWater},
+            zzmFlowRate=#{data.zzmWater},
+            temp1=#{data.temp1},
+            temp2=#{data.temp2},
+            temp3=#{data.temp3},
+            tempAverage=#{data.tempAverage},
+            moisture1=#{data.moisture1},
+            moisture2=#{data.moisture2},
+            moisture3=#{data.moisture3},
+            moistureAverage=#{data.moistureAverage},
+            wbgt1=#{data.wbgt1},
+            wbgt2=#{data.wbgt2},
+            wbgt3=#{data.wbgt3},
+            wbgtAverage=#{data.wbgtAverage},
+            dkFlowRate=#{data.dkFlowRate},
+            status=#{data.status},
+            basis=#{data.basis},
+            description=#{data.description},
+            depth=#{data.depth}
+        where id = #{data.id}
+    </update>
     <select id="getAllData" resultType="Data">
         select * from ${table}
         <where>
@@ -40,4 +70,11 @@
         from ${table}
         order by date
     </select>
+    <delete id="delDataById">
+        delete
+        from ${table}
+        where id = #{id}
+    </delete>
+
+
 </mapper>

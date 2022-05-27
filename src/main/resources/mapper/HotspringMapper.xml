@@ -7,4 +7,8 @@
     <select id="findAll" resultType="com.czvisual.entity.Hotspring">
         select * from hotspring
     </select>
+    
+    <select id="findTypeByGroup" resultType="String">
+        select ${groupParam} from hotspring group by ${groupParam}
+    </select>
 </mapper>

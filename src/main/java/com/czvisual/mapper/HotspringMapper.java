@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface HotspringMapper {
     public List<Hotspring> findAll();
+    public List<String> findTypeByGroup(String groupParam);
 }

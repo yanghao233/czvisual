@@ -27,4 +27,12 @@ public class DataService {
     public List<Data> getRealAllData(String table){
         return dataMapper.getRealAllData(table);
     }
+
+    public int updateData(Data data,String table) {
+        return dataMapper.updateData(data,table);
+    }
+
+    public int delDataById(Integer id,String table) {
+        return dataMapper.delDataById(id,table);
+    }
 }

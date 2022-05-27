@@ -9,31 +9,31 @@ public class Data {
     private Integer id;
     @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     private String date;
-    private float zzmlc;
+    private Float zzmlc;
     private String time;
-    private float zzmMiddle;
-    private float zzmLeft;
-    private float zzmRight;
-    private float zzmAverage;
-    private float zzmWater;
-    private float zzmFlowRate;
-    private float temp1;
-    private float temp2;
-    private float temp3;
-    private float tempAverage;
-    private float moisture1;
-    private float moisture2;
-    private float moisture3;
-    private float moistureAverage;
-    private float wbgt1;
-    private float wbgt2;
-    private float wbgt3;
-    private float wbgtAverage;
+    private Float zzmMiddle;
+    private Float zzmLeft;
+    private Float zzmRight;
+    private Float zzmAverage;
+    private Float zzmWater;
+    private Float zzmFlowRate;
+    private Float temp1;
+    private Float temp2;
+    private Float temp3;
+    private Float tempAverage;
+    private Float moisture1;
+    private Float moisture2;
+    private Float moisture3;
+    private Float moistureAverage;
+    private Float wbgt1;
+    private Float wbgt2;
+    private Float wbgt3;
+    private Float wbgtAverage;
     private int dkFlowRate;
     private String status;
     private String basis;
     private String description;
-    private float depth;
+    private Float depth;
     @ExcelIgnore
     private String table;
 
@@ -45,11 +45,11 @@ public class Data {
         this.date = date;
     }
 
-    public float getZzmlc() {
+    public Float getZzmlc() {
         return zzmlc;
     }
 
-    public void setZzmlc(float zzmlc) {
+    public void setZzmlc(Float zzmlc) {
         this.zzmlc = zzmlc;
     }
 
@@ -61,139 +61,139 @@ public class Data {
         this.time = time;
     }
 
-    public float getZzmMiddle() {
+    public Float getZzmMiddle() {
         return zzmMiddle;
     }
 
-    public void setZzmMiddle(float zzmMiddle) {
+    public void setZzmMiddle(Float zzmMiddle) {
         this.zzmMiddle = zzmMiddle;
     }
 
-    public float getZzmLeft() {
+    public Float getZzmLeft() {
         return zzmLeft;
     }
 
-    public void setZzmLeft(float zzmLeft) {
+    public void setZzmLeft(Float zzmLeft) {
         this.zzmLeft = zzmLeft;
     }
 
-    public float getZzmRight() {
+    public Float getZzmRight() {
         return zzmRight;
     }
 
-    public void setZzmRight(float zzmRight) {
+    public void setZzmRight(Float zzmRight) {
         this.zzmRight = zzmRight;
     }
 
-    public float getZzmAverage() {
+    public Float getZzmAverage() {
         return zzmAverage;
     }
 
-    public void setZzmAverage(float zzmAverage) {
+    public void setZzmAverage(Float zzmAverage) {
         this.zzmAverage = zzmAverage;
     }
 
-    public float getZzmFlowRate() {
+    public Float getZzmFlowRate() {
         return zzmFlowRate;
     }
 
-    public void setZzmFlowRate(float zzmFlowRate) {
+    public void setZzmFlowRate(Float zzmFlowRate) {
         this.zzmFlowRate = zzmFlowRate;
     }
 
-    public float getTemp1() {
+    public Float getTemp1() {
         return temp1;
     }
 
-    public void setTemp1(float temp1) {
+    public void setTemp1(Float temp1) {
         this.temp1 = temp1;
     }
 
-    public float getTemp2() {
+    public Float getTemp2() {
         return temp2;
     }
 
-    public void setTemp2(float temp2) {
+    public void setTemp2(Float temp2) {
         this.temp2 = temp2;
     }
 
-    public float getTemp3() {
+    public Float getTemp3() {
         return temp3;
     }
 
-    public void setTemp3(float temp3) {
+    public void setTemp3(Float temp3) {
         this.temp3 = temp3;
     }
 
-    public float getTempAverage() {
+    public Float getTempAverage() {
         return tempAverage;
     }
 
-    public void setTempAverage(float tempAverage) {
+    public void setTempAverage(Float tempAverage) {
         this.tempAverage = tempAverage;
     }
 
-    public float getMoisture1() {
+    public Float getMoisture1() {
         return moisture1;
     }
 
-    public void setMoisture1(float moisture1) {
+    public void setMoisture1(Float moisture1) {
         this.moisture1 = moisture1;
     }
 
-    public float getMoisture2() {
+    public Float getMoisture2() {
         return moisture2;
     }
 
-    public void setMoisture2(float moisture2) {
+    public void setMoisture2(Float moisture2) {
         this.moisture2 = moisture2;
     }
 
-    public float getMoisture3() {
+    public Float getMoisture3() {
         return moisture3;
     }
 
-    public void setMoisture3(float moisture3) {
+    public void setMoisture3(Float moisture3) {
         this.moisture3 = moisture3;
     }
 
-    public float getMoistureAverage() {
+    public Float getMoistureAverage() {
         return moistureAverage;
     }
 
-    public void setMoistureAverage(float moistureAverage) {
+    public void setMoistureAverage(Float moistureAverage) {
         this.moistureAverage = moistureAverage;
     }
 
-    public float getWbgt1() {
+    public Float getWbgt1() {
         return wbgt1;
     }
 
-    public void setWbgt1(float wbgt1) {
+    public void setWbgt1(Float wbgt1) {
         this.wbgt1 = wbgt1;
     }
 
-    public float getWbgt2() {
+    public Float getWbgt2() {
         return wbgt2;
     }
 
-    public void setWbgt2(float wbgt2) {
+    public void setWbgt2(Float wbgt2) {
         this.wbgt2 = wbgt2;
     }
 
-    public float getWbgt3() {
+    public Float getWbgt3() {
         return wbgt3;
     }
 
-    public void setWbgt3(float wbgt3) {
+    public void setWbgt3(Float wbgt3) {
         this.wbgt3 = wbgt3;
     }
 
-    public float getWbgtAverage() {
+    public Float getWbgtAverage() {
         return wbgtAverage;
     }
 
-    public void setWbgtAverage(float wbgtAverage) {
+    public void setWbgtAverage(Float wbgtAverage) {
         this.wbgtAverage = wbgtAverage;
     }
 
@@ -229,19 +229,19 @@ public class Data {
         this.description = description;
     }
 
-    public float getDepth() {
+    public Float getDepth() {
         return depth;
     }
 
-    public void setDepth(float depth) {
+    public void setDepth(Float depth) {
         this.depth = depth;
     }
 
-    public float getZzmWater() {
+    public Float getZzmWater() {
         return zzmWater;
     }
 
-    public void setZzmWater(float zzmWater) {
+    public void setZzmWater(Float zzmWater) {
         this.zzmWater = zzmWater;
     }
 
@@ -283,5 +283,13 @@ public class Data {
                 ", description='" + description + '\'' +
                 ", depth=" + depth +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

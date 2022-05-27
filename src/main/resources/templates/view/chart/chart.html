@@ -266,6 +266,7 @@
             method: "GET",
             dataType: "json",
             success: function (data) {
+                data = data.data;
                 for (var i in data) {
                     $("#dropdownMenu2").append("<li><a id='" + data[i].tablename + "'>" + data[i].hotspringname + "</a></li>")
                     $('#' + data[i].tablename).on('click', function (object) {

@@ -10,21 +10,54 @@
 <body class="childrenBody">
 <!-- 搜索条件开始 -->
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>超级管理员</legend>
+    <legend>温泉管理</legend>
 </fieldset>
 <blockquote class="layui-elem-quote">
     <form class="layui-form" method="post" id="searchFrm">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">用户姓名:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="realname" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">区域</label>
+                <div class="layui-input-block">
+                    <select name="area" lay-verify="required">
+                        <option value=""></option>
+                        <option th:each="i:${area}" th:text="${i}" th:value="${i}"></option>
+                    </select>
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">登陆名称:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="username" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">普通类型</label>
+                <div class="layui-input-block">
+                    <select name="commonType" lay-verify="required">
+                        <option value=""></option>
+                        <option th:each="i:${commonType}" th:text="${i}" th:value="${i}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">热显示类型</label>
+                <div class="layui-input-block">
+                    <select name="heatDisplayType" lay-verify="required">
+                        <option value=""></option>
+                        <option th:each="i:${heatDisplayType}" th:text="${i}" th:value="${i}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">热害</label>
+                <div class="layui-input-block">
+                    <select name="heatDamageType" lay-verify="required">
+                        <option value=""></option>
+                        <option th:each="i:${heatDamageType}" th:text="${i}" th:value="${i}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">化学成分</label>
+                <div class="layui-input-block">
+                    <select name="chemicalCompositionType" lay-verify="required">
+                        <option value=""></option>
+                        <option th:each="i:${chemicalCompositionType}" th:text="${i}" th:value="${i}"></option>
+                    </select>
                 </div>
             </div>
             <div class="layui-inline">
@@ -36,7 +69,6 @@
                 </div>
             </div>
         </div>
-
     </form>
 </blockquote>
 <!-- 搜索条件结束 -->
@@ -46,10 +78,9 @@
 <div style="display: none;" id="userToolBar">
     <button type="button" class="layui-btn layui-btn-sm" lay-event="add">增加</button>
 </div>
-<div id="userBar" style="display: none;">
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resetPassword">重置密码</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+<div id="toolBar" style="display: none;">
+    <a th:if="${edit eq 1}" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a th:if="${del eq 1}" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </div>
 <!-- 数据表格结束 -->
 
@@ -58,56 +89,29 @@
     <form class="layui-form" lay-filter="dataFrm" id="dataFrm">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">登陆名称:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="username" lay-verify="required" placeholder="请输入用户登陆名称" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">用户姓名:</label>
+                <label class="layui-form-label">录入时间</label>
                 <div class="layui-input-inline">
                     <input type="hidden" name="id">
-                    <input type="text" name="realname" placeholder="请输入用户姓名" autocomplete="off"
+                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">掌子面里程</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zzmlc" id="zzmlc" lay-verify="number" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户性别:</label>
-            <div class="layui-input-block">
-                <input type="radio" name="sex" value="1" title="男" checked>
-                <input type="radio" name="sex" value="0" title="女">
+            <div class="layui-inline">
+                <label class="layui-form-label">掌子面均温</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zzmAverage" id="zzmAverage" lay-verify="number" autocomplete="off"
+                           class="layui-input">
+                </div>
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户电话:</label>
-            <div class="layui-input-inline">
-                <input type="tel" name="phone" placeholder="请输入用户电话"
-                       autocomplete="off"
-                       class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item ">
-            <label class="layui-form-label">用户权限:</label>
-            <div class="layui-input-inline">
-                <select name="type">
-                    <option value="0">系统管理员</option>
-                    <option value="1">数据录入员</option>
-                    <option value="2">数据分析员</option>
-                    <option value="3">普通用户</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item ">
-            <label class="layui-form-label">是否可用:</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="available" lay-skin="switch" lay-text="可用|不可用" value=1 checked >
-            </div>
-        </div>
         <div class="layui-form-item layui-layer-btn layui-layer-btn-c">
             <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
                     lay-filter="doSubmit" lay-submit>
@@ -123,7 +127,7 @@
 
 
 <script src="/layui/layui.js"></script>
-<script type="text/javascript" th:inline="none">
+<script type="text/javascript" th:inline="javascript">
     var tableIns;
     layui.extend({
         dtree: '/layui_ext/dist/dtree'
@@ -132,11 +136,14 @@
         var layer = layui.layer;
         var form = layui.form;
         var table = layui.table;
-        var dtree = layui.dtree;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#date'
+        })
         //渲染数据表格
         tableIns = table.render({
             elem: '#userTable'   //渲染的目标对象
-            , url: '/user/selectAllUser' //数据接口
+            , url: '/hsManage/getAllHotspring' //数据接口
             , title: '用户数据表'//数据导出来的标题
             , toolbar: "#userToolBar"   //表格的工具条
             , height: 'full-230'
@@ -145,24 +152,14 @@
             , limits: [10, 20, 30]
             , limit: 10//默认采用3
             , cols: [[   //列表数据
-                {field: 'id',title: 'ID',align: 'center',hide:true},
-                {field: 'username', title: '登陆名', align: 'center'},
-                {field: 'realname', title: '用户姓名', align: 'center'},
-                {
-                    field: 'sex', title: '性别', align: 'center',
-                    templet: function (d) {
-                        return d.sex === 1 ? '男' : '女';
-                    }
-                },
-                {field: 'phone', title: '用户电话', align: 'center'},
-                {field: 'position', title: '权限', align: 'center'},
-                {
-                    field: 'available', title: '是否可用', align: 'center',
-                    templet: function (d) {
-                        return d.available === 1 ? '<font color=blue>可用</font>' : '<font color=red>禁用</font>';
-                    }
-                },
-                {fixed: 'right', title: '操作', toolbar: '#userBar', align: 'center', width: '260'}
+                {field: 'hotspringname', title: '温泉名称', align: 'center'},
+                {field: 'tablename', title: '数据库表名', align: 'center'}
+                , {field: 'area', title: '地域', align: 'center', sort: true}
+                , {field: 'commontype', title: '普通类型', align: 'center'}
+                , {field: 'heatdisplaytype', title: '热显示', align: 'center'}
+                , {field: 'heatdamagetype', title: '热害', align: 'center'}
+                , {field: 'chemicalcompositiontype', title: '化学成分', align: 'center'}
+                , {fixed: 'right', title: '操作', toolbar: '#toolBar', align: 'center', width: "10%"}
             ]]
         })
         //模糊查询
@@ -170,7 +167,7 @@
             var params = $("#searchFrm").serialize();
             console.log($("#searchFrm").serialize());
             tableIns.reload({
-                url: "/user/selectAllUser?" + params
+                url: "/dataManage/getRealAllData?" + params
             })
         });
 
@@ -178,22 +175,19 @@
         table.on("toolbar(userTable)", function (obj) {
             switch (obj.event) {
                 case 'add':
-                    openAddUser();
+                    openAddRecord();
                     break;
             }
         })
         //监听行工具事件
         table.on('tool(userTable)', function (obj) {
-            console.log("183行 监听行工具事件")
             console.log(obj);
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
-                onDelUser(data);
+                onDelRecord(data);
             } else if (layEvent === 'edit') { //编辑
-                openUpdateUser(data);
-            } else if (layEvent === 'resetPassword') {//重置密码
-                onResetPassword(data);
+                openUpdateRecord(data);
             }
         });
 
@@ -201,47 +195,30 @@
         var mainIndex;
 
         //打开添加页面
-        function openAddUser() {
+        function openAddRecord() {
             mainIndex = layer.open({
                 type: 1,
-                title: '添加用户',
+                title: '添加数据',
                 content: $("#saveOrUpdateDiv"),
-                area: ['400px', '550px'],
+                area: ['1100px', '550px'],
                 success: function (index) {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
-                    url = "/user/addUser";
+                    url = "/dataManage/addRecord?table=" + $('#searchFrm').serializeArray()[0]['value'];
                 }
             });
         }
 
-        //打开添加页面
-        function onResetPassword(data) {
-            layer.confirm('是否将重置密码为【123456】', function (index) {
-                //向服务端发送删除指令
-                $.ajax({
-                    url: "/user/changePassword",
-                    type: "POST",
-                    data: {id: data.id},
-                    dataType: "json",
-                    success: function (result, status, xhr) {
-                        layer.msg(result.message);
-                        // if (result.code === 0) {
-                        //     //刷新数据 表格
-                        //     tableIns.reload();
-                        // }
-                    }
-                });
-            });
-        }
 
-        function onDelUser(data) {
-            layer.confirm('真的删除【' + data.username + '】这个用户吗', function (index) {
+        function onDelRecord(data) {
+            console.log(data);
+            console.log($('#searchFrm').serializeArray());
+            layer.confirm('真的删除这条数据吗', function (index) {
                 //向服务端发送删除指令
                 $.ajax({
-                    url: "/user/deleteUser",
+                    url: "/dataManage/delRecord",
                     type: "POST",
-                    data: {id: data.id},
+                    data: {id: data.id, table: $('#searchFrm').serializeArray()[0]['value']},
                     dataType: "json",
                     success: function (result, status, xhr0) {
                         layer.msg(result.message);
@@ -255,17 +232,17 @@
         }
 
         //打开修改页面
-        function openUpdateUser(data) {
+        function openUpdateRecord(data) {
             mainIndex = layer.open({
                 type: 1,
-                title: '修改用户',
+                title: '修改数据',
                 content: $("#saveOrUpdateDiv"),
-                area: ['400px', '500px'],
+                area: ['1100px', '500px'],
                 success: function (index) {
-                    console.log("openUpdateUser打开修改页面");
+                    console.log("openUpdateRecord打开修改页面");
                     console.log(data);
                     form.val("dataFrm", data);
-                    url = "/user/updateUser";
+                    url = "/dataManage/updateRecord?table=" + $('#searchFrm').serializeArray()[0]['value'];
                 }
             });
         }
@@ -279,7 +256,7 @@
             console.log(params);
             $.post(url, params, function (obj) {
                 layer.msg(obj.message);
-                if(obj.code === 0){
+                if (obj.code === 0) {
                     //关闭弹出层
                     layer.close(mainIndex)
                     //刷新数据 表格
@@ -287,8 +264,7 @@
                 }
             })
         });
-    })
-    ;
+    });
 </script>
 </body>
 </html>

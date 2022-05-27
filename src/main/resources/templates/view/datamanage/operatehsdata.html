@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>用户管理</title>
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
-    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/css/public.css" media="all"/>
 </head>
 <body class="childrenBody">
 <!-- 搜索条件开始 -->
@@ -40,10 +40,9 @@
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 <div style="display: none;" id="userToolBar">
-    <button type="button" class="layui-btn layui-btn-sm" lay-event="add">增加</button>
+    <button type="button" class="layui-btn layui-btn-sm"  lay-event="add">增加</button>
 </div>
 <div id="toolBar" style="display: none;">
-    <a th:if="${reset eq 1}" class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resetPassword">重置密码</a>
     <a th:if="${edit eq 1}" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a th:if="${del eq 1}" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </div>
@@ -54,54 +53,174 @@
     <form class="layui-form" lay-filter="dataFrm" id="dataFrm">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">登陆名称:</label>
+                <label class="layui-form-label">录入时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" lay-verify="required" placeholder="请输入用户登陆名称" autocomplete="off"
-                           class="layui-input">
+                    <input type="hidden" name="id">
+                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">掌子面里程</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zzmlc" id="zzmlc" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">掌子面均温</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zzmAverage" id="zzmAverage" lay-verify="number"  autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">用户姓名:</label>
+                <label class="layui-form-label" >掌子面温度(左)</label>
                 <div class="layui-input-inline">
-                    <input type="hidden" name="id">
-                    <input type="text" name="realname" placeholder="请输入用户姓名" autocomplete="off"
-                           class="layui-input">
+                    <input type="text" name="zzmLeft" id="zzmLeft" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">掌子面温度(中)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zzmMiddle" id="zzmMiddle" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">掌子面温度(右)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zzmRight" id="zzmRight" lay-verify="number"  autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">用户性别:</label>
-            <div class="layui-input-block">
-                <input type="radio" name="sex" value="1" title="男" checked>
-                <input type="radio" name="sex" value="0" title="女">
+            <div class="layui-inline">
+                <label class="layui-form-label" >环境温度(左)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="temp1" id="temp1" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">环境温度(中)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="temp2" id="temp2" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">环境温度(右)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="temp3" id="temp3" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
             </div>
         </div>
-
         <div class="layui-form-item">
-            <label class="layui-form-label">用户电话:</label>
-            <div class="layui-input-inline">
-                <input type="number" name="phone" placeholder="请输入用户电话"
-                       autocomplete="off"
-                       class="layui-input">
+            <div class="layui-inline">
+                <label class="layui-form-label" >水温</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zzmWater" id="zzmWater" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">掌子面水流量</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zzmFlowRate" id="zzmFlowRate" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">环境均温</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="tempAverage" id="tempAverage" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
             </div>
         </div>
-        <div class="layui-form-item ">
-            <label class="layui-form-label">用户权限:</label>
-            <div class="layui-input-inline">
-                <select name="type">
-                    <option value="0">系统管理员</option>
-                    <option value="1">数据录入员</option>
-                    <option value="2">数据分析员</option>
-                    <option value="3">普通用户</option>
-                </select>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" >环境湿度(左)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="moisture1" id="moisture1" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">环境湿度(中)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="moisture2" id="moisture2" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">环境湿度(右)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="moisture3" id="moisture3" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
             </div>
         </div>
-        <div class="layui-form-item ">
-            <label class="layui-form-label">是否可用:</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="available" lay-skin="switch" lay-text="可用|不可用" value=1 checked>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" >WBGT指标(左)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="wbgt1" id="wbgt1" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">WBGT指标(中)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="wbgt2" id="wbgt2" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">WBGT指标(右)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="wbgt3" id="wbgt3" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" >环境均湿度</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="moistureAverage" id="moistureAverage" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">WBGT均指标</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="wbgtAverage" id="wbgtAverage" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="status" id="status"   autocomplete="off" value="/" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">洞内总水流量(洞口)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="dkFlowRate" id="dkFlowRate" lay-verify="number"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">依据</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="basis" id="basis" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">掌子面深度</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="depth" id="depth" lay-verify="number" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="description" id="description" autocomplete="off" class="layui-input">
+                </div>
             </div>
         </div>
         <div class="layui-form-item layui-layer-btn layui-layer-btn-c">
@@ -129,7 +248,10 @@
         var layer = layui.layer;
         var form = layui.form;
         var table = layui.table;
-        var dtree = layui.dtree;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#date'
+        })
         //渲染数据表格
         tableIns = table.render({
             elem: '#userTable'   //渲染的目标对象
@@ -142,11 +264,12 @@
             , limits: [10, 20, 30]
             , limit: 10//默认采用3
             , cols: [[   //列表数据
+                {field: 'id',title: 'ID',align: 'center',hide:true},
                 {field:'date', title:'录入时间',align:'center',sort: true}
                 ,{field:'zzmlc', title:'掌子面里程',align:'center',sort: true}
-                ,{field:'zzmMiddle', title:'掌子面中温度',align:'center'}
-                ,{field:'zzmLeft', title:'掌子面左侧温度',align:'center'}
-                ,{field:'zzmRight', title:'掌子面左侧温度',align:'center'}
+                ,{field:'zzmMiddle', title:'掌子面温度(中)',align:'center'}
+                ,{field:'zzmLeft', title:'掌子面温度(左)',align:'center'}
+                ,{field:'zzmRight', title:'掌子面温度(右)',align:'center'}
                 ,{field:'zzmAverage', title:'掌子面均温',align:'center'}
                 ,{field:'zzmWater', title:'水温',align:'center'}
                 ,{field:'zzmFlowRate', title:'掌子面水流量',align:'center'}
@@ -167,7 +290,7 @@
                 ,{field:'basis', title:'依据',align:'center'}
                 ,{field:'description', title:'备注',align:'center'}
                 ,{field:'depth', title:'掌子面深度',align:'center'}
-                ,{fixed: '', title:'操作', toolbar: '#toolBar',align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#toolBar',align:'center',width:"10%"}
             ]]
         })
         //模糊查询
@@ -183,22 +306,19 @@
         table.on("toolbar(userTable)", function (obj) {
             switch (obj.event) {
                 case 'add':
-                    openAddUser();
+                    openAddRecord();
                     break;
             }
         })
         //监听行工具事件
         table.on('tool(userTable)', function (obj) {
-            console.log("183行 监听行工具事件")
             console.log(obj);
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
-                onDelUser(data);
+                onDelRecord(data);
             } else if (layEvent === 'edit') { //编辑
-                openUpdateUser(data);
-            } else if (layEvent === 'resetPassword') {//重置密码
-                onResetPassword(data);
+                openUpdateRecord(data);
             }
         });
 
@@ -206,47 +326,31 @@
         var mainIndex;
 
         //打开添加页面
-        function openAddUser() {
+        function openAddRecord() {
             mainIndex = layer.open({
                 type: 1,
-                title: '添加用户',
+                title: '添加数据',
                 content: $("#saveOrUpdateDiv"),
-                area: ['400px', '550px'],
+                area: ['1100px', '550px'],
                 success: function (index) {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
-                    url = "/user/addUser";
+                    url = "/dataManage/addRecord?table="+$('#searchFrm').serializeArray()[0]['value'];
                 }
             });
         }
 
-        //打开添加页面
-        function onResetPassword(data) {
-            layer.confirm('是否将重置密码为【123456】', function (index) {
-                //向服务端发送删除指令
-                $.ajax({
-                    url: "/user/changePassword",
-                    type: "POST",
-                    data: {id: data.id},
-                    dataType: "json",
-                    success: function (result, status, xhr) {
-                        layer.msg(result.message);
-                        // if (result.code === 0) {
-                        //     //刷新数据 表格
-                        //     tableIns.reload();
-                        // }
-                    }
-                });
-            });
-        }
 
-        function onDelUser(data) {
-            layer.confirm('真的删除【' + data.username + '】这个用户吗', function (index) {
+
+        function onDelRecord(data) {
+            console.log(data);
+            console.log($('#searchFrm').serializeArray());
+            layer.confirm('真的删除这条数据吗', function (index) {
                 //向服务端发送删除指令
                 $.ajax({
-                    url: "/user/deleteUser",
+                    url: "/dataManage/delRecord",
                     type: "POST",
-                    data: {id: data.id},
+                    data: {id: data.id,table:$('#searchFrm').serializeArray()[0]['value']},
                     dataType: "json",
                     success: function (result, status, xhr0) {
                         layer.msg(result.message);
@@ -260,17 +364,17 @@
         }
 
         //打开修改页面
-        function openUpdateUser(data) {
+        function openUpdateRecord(data) {
             mainIndex = layer.open({
                 type: 1,
-                title: '修改用户',
+                title: '修改数据',
                 content: $("#saveOrUpdateDiv"),
-                area: ['400px', '500px'],
+                area: ['1100px', '500px'],
                 success: function (index) {
-                    console.log("openUpdateUser打开修改页面");
+                    console.log("openUpdateRecord打开修改页面");
                     console.log(data);
                     form.val("dataFrm", data);
-                    url = "/user/updateUser";
+                    url = "/dataManage/updateRecord?table="+$('#searchFrm').serializeArray()[0]['value'];
                 }
             });
         }
@@ -292,8 +396,7 @@
                 }
             })
         });
-    })
-    ;
+    });
 </script>
 </body>
 </html>

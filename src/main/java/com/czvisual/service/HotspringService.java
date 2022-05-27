@@ -14,4 +14,7 @@ public class HotspringService {
     public List<Hotspring> findAll() {
         return hotspringMapper.findAll();
     }
+    public List<String> findTypeByGroup(String groupParam) {
+        return hotspringMapper.findTypeByGroup(groupParam);
+    }
 }
