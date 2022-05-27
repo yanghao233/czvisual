@@ -31,4 +31,7 @@
     <select id="getAllData" resultType="Data">
         select * from ${table} where date between #{startDate} and #{endDate}
     </select>
+    <select id="getRealAllData" resultType="Data">
+        select * from ${table}
+    </select>
 </mapper>

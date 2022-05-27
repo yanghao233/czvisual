@@ -24,7 +24,7 @@
                 <label for="endTime">结束时间</label>
                 <input class="form-control" id="endTime">
             </div>
-            <button type="button" id="time_btn" class="btn btn-default" style="margin: 20px">确认</button>
+<!--            <button type="button" id="time_btn" class="btn btn-default" style="margin: 20px">确认</button>-->
         </form>
 
         <div class="dropdown" style="margin: 50px">
@@ -255,13 +255,14 @@
         });
 
         $.ajax({
-            url: "/dataManage/getAllHotspring",
+            url: "/hsManage/getAllHotspring",
             method: "GET",
             dataType: "json",
             success: function (data) {
                 for (var i in data) {
                     $("#dropdownMenu2").append("<li><a id='" + data[i].tablename + "'>" + data[i].hotspringname + "</a></li>")
                     $('#' + data[i].tablename).on('click', function (object) {
+                        $("#dropdownMenu1").html(object.target.text+" <span class='caret'></span>");
                         getData(object.target.id);
                     })
                 }

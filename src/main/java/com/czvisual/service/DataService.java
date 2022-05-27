@@ -23,4 +23,8 @@ public class DataService {
     public List<Data> getAllData(String startDate, String endDate, String table) {
         return dataMapper.getAllData(startDate, endDate, table);
     }
+
+    public List<Data> getRealAllData(String table){
+        return dataMapper.getRealAllData(table);
+    }
 }

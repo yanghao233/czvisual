@@ -12,4 +12,5 @@ public interface DataMapper {
     int insertDataBatch(List<Data> dataList, String table);
 
     List<Data> getAllData(String startDate, String endDate, String table);
+    List<Data> getRealAllData(String table);
 }
