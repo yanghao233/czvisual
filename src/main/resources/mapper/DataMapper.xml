@@ -15,11 +15,9 @@
                 #{data.basis}, #{data.description}, #{data.depth})
     </insert>
     <insert id="insertDataBatch" parameterType="java.util.List">
-        insert into ${table}(date, zzmlc, time, zzmMiddle, zzmLeft, zzmRight, zzmAverage, zzmWater, zzmFlowRate,
-        temp1, temp2, temp3, 
-                             tempAverage, moisture1, moisture2, moisture3, moistureAverage,
-        wbgt1, wbgt2, wbgt3, wbgtAverage, dkFlowRate, status, basis, description, depth)
-        values
+        insert into ${table}(date, zzmlc, time, zzmMiddle, zzmLeft, zzmRight, zzmAverage, zzmWater, zzmFlowRate,temp1,
+        temp2, temp3, tempAverage, moisture1, moisture2, moisture3, moistureAverage,wbgt1, wbgt2, wbgt3, wbgtAverage,
+        dkFlowRate, status, basis, description, depth) values
         <foreach collection="dataList" item="data" separator=",">
             (#{data.date}, #{data.zzmlc}, #{data.time}, #{data.zzmMiddle}, #{data.zzmLeft}, #{data.zzmRight},
             #{data.zzmAverage}, #{data.zzmWater}, #{data.zzmFlowRate}, #{data.temp1}, #{data.temp2}, #{data.temp3},
@@ -29,9 +27,17 @@
         </foreach>
     </insert>
     <select id="getAllData" resultType="Data">
-        select * from ${table} where date between #{startDate} and #{endDate}
+        select * from ${table}
+        <where>
+            <if test="startDate!=null and endDate!=null">
+                date between #{startDate} and #{endDate}
+            </if>
+        </where>
+        order by date
     </select>
     <select id="getRealAllData" resultType="Data">
-        select * from ${table}
+        select *
+        from ${table}
+        order by date
     </select>
 </mapper>

@@ -266,6 +266,10 @@
                         getData(object.target.id);
                     })
                 }
+                if (data.length) {
+                    getData(data[0].tablename);
+                    $("#dropdownMenu1").html(data[0].hotspringname +" <span class='caret'></span>");
+                }
             }
         });
 
@@ -273,10 +277,8 @@
             var startTime = $("#startTime").val();
             var endTime = $("#endTime").val();
             if (startTime === "" || endTime === "") {
-                layer.msg("时间不能为空", {
-                    icon: 2,
-                    shift: 6
-                })
+                url = "/dataManage/getAllData?table=" + table;
+                updateData(url);
                 return;
             }
             var startDate = new Date(startTime);
@@ -287,75 +289,85 @@
                     shift: 6
                 });
             } else {
-                $.ajax({
-                    url: "/dataManage/getAllData?startDate=" + startTime + "&endDate=" + endTime + "&table=" + table,
-                    method: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        allDate = [];
-                        zzmlc = [];
-                        zzmLeft = [];
-                        zzmRight = [];
-                        zzmMiddle = [];
-                        moistureAverage = []
-                        tempAverage = []
-                        wbgtAverage = []
-                        for (var i in data) {
-                            allDate.push(data[i].date);
-                            zzmlc.push(data[i].zzmlc);
-                            zzmLeft.push(data[i].zzmLeft);
-                            zzmRight.push(data[i].zzmRight);
-                            zzmMiddle.push(data[i].zzmMiddle);
-                            moistureAverage.push(data[i].moistureAverage);
-                            tempAverage.push(data[i].tempAverage);
-                            wbgtAverage.push(data[i].wbgtAverage);
-                        }
-
-                        // 更新掌子面里程散点图
-                        option1.xAxis.data = allDate;
-                        option1.series[0].data = zzmlc;
-                        option1.yAxis.min = Math.min.apply(Math, zzmlc);
-                        option1.yAxis.max = Math.max.apply(Math, zzmlc);
-                        chart1.setOption(option1);
-
-                        // 更新掌子面中左右温度折线图
-                        option2.xAxis.data = allDate;
-                        option2.series[0].data = zzmLeft;
-                        option2.series[1].data = zzmMiddle;
-                        option2.series[2].data = zzmRight;
-                        aMin = Math.min.apply(Math, zzmLeft);
-                        aMax = Math.max.apply(Math, zzmLeft);
-                        bMin = Math.min.apply(Math, zzmMiddle);
-                        bMax = Math.max.apply(Math, zzmMiddle);
-                        cMin = Math.min.apply(Math, zzmRight);
-                        cMax = Math.max.apply(Math, zzmRight);
-                        option2.yAxis.min = Math.min(aMin, bMin, cMin);
-                        option2.yAxis.max = Math.max(aMax, bMax, cMax);
-                        chart2.setOption(option2);
-
-                        //更新掌子面湿度折线图
-                        option3.xAxis.data = allDate;
-                        option3.series[0].data = moistureAverage;
-                        option3.yAxis.min = Math.min.apply(Math, moistureAverage);
-                        option3.yAxis.max = Math.max.apply(Math, moistureAverage);
-                        chart3.setOption(option3);
-
-                        //更新掌子面环境温度和wbgt折线图
-                        option4.xAxis.data = allDate;
-                        option4.series[0].data = tempAverage;
-                        option4.series[1].data = wbgtAverage;
-                        dMin = Math.min.apply(Math, tempAverage);
-                        dMax = Math.max.apply(Math, tempAverage);
-                        eMin = Math.min.apply(Math, wbgtAverage);
-                        eMax = Math.max.apply(Math, wbgtAverage);
-                        option4.yAxis.min = Math.min(dMin, eMin);
-                        option4.yAxis.max = Math.max(eMin, eMax);
-                        chart4.setOption(option4)
-                    }
-                });
+                url = "/dataManage/getAllData?startDate=" + startTime + "&endDate=" + endTime + "&table=" + table;
+                updateData(url);
             }
         }
     })
+
+    function updateData(url) {
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                allDate = [];
+                zzmlc = [];
+                zzmLeft = [];
+                zzmRight = [];
+                zzmMiddle = [];
+                moistureAverage = []
+                tempAverage = []
+                wbgtAverage = []
+                for (var i in data) {
+                    allDate.push(data[i].date);
+                    zzmlc.push(data[i].zzmlc);
+                    zzmLeft.push(data[i].zzmLeft);
+                    zzmRight.push(data[i].zzmRight);
+                    zzmMiddle.push(data[i].zzmMiddle);
+                    moistureAverage.push(data[i].moistureAverage);
+                    tempAverage.push(data[i].tempAverage);
+                    wbgtAverage.push(data[i].wbgtAverage);
+                }
+                //如果输入日期为空，更新日期
+                size = allDate.length;
+                if (size) {
+                    $("#startTime").val(allDate[0]);
+                    $("#endTime").val(allDate[size - 1]);
+                }
+                // 更新掌子面里程散点图
+                option1.xAxis.data = allDate;
+                option1.series[0].data = zzmlc;
+                option1.yAxis.min = Math.min.apply(Math, zzmlc);
+                option1.yAxis.max = Math.max.apply(Math, zzmlc);
+                chart1.setOption(option1);
+
+                // 更新掌子面中左右温度折线图
+                option2.xAxis.data = allDate;
+                option2.series[0].data = zzmLeft;
+                option2.series[1].data = zzmMiddle;
+                option2.series[2].data = zzmRight;
+                aMin = Math.min.apply(Math, zzmLeft);
+                aMax = Math.max.apply(Math, zzmLeft);
+                bMin = Math.min.apply(Math, zzmMiddle);
+                bMax = Math.max.apply(Math, zzmMiddle);
+                cMin = Math.min.apply(Math, zzmRight);
+                cMax = Math.max.apply(Math, zzmRight);
+                option2.yAxis.min = Math.min(aMin, bMin, cMin);
+                option2.yAxis.max = Math.max(aMax, bMax, cMax);
+                chart2.setOption(option2);
+
+                //更新掌子面湿度折线图
+                option3.xAxis.data = allDate;
+                option3.series[0].data = moistureAverage;
+                option3.yAxis.min = Math.min.apply(Math, moistureAverage);
+                option3.yAxis.max = Math.max.apply(Math, moistureAverage);
+                chart3.setOption(option3);
+
+                //更新掌子面环境温度和wbgt折线图
+                option4.xAxis.data = allDate;
+                option4.series[0].data = tempAverage;
+                option4.series[1].data = wbgtAverage;
+                dMin = Math.min.apply(Math, tempAverage);
+                dMax = Math.max.apply(Math, tempAverage);
+                eMin = Math.min.apply(Math, wbgtAverage);
+                eMax = Math.max.apply(Math, wbgtAverage);
+                option4.yAxis.min = Math.min(dMin, eMin);
+                option4.yAxis.max = Math.max(dMax, eMax);
+                chart4.setOption(option4)
+            }
+        });
+    }
 </script>
 </body>
 </html>

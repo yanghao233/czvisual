@@ -5,6 +5,8 @@ import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 
 public class Data {
+    @ExcelIgnore
+    private Integer id;
     @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     private String date;
     private float zzmlc;

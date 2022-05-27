@@ -39,6 +39,7 @@ public class ExcelListener<T> implements ReadListener<T> {
 
     public ExcelListener(DataService dataService, String table) {
         this.dataService = dataService;
+        this.table = table;
     }
 
     //TODO: 错误处理
