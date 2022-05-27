@@ -30,7 +30,7 @@
         <div class="dropdown" style="margin: 50px">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="true">
-                选择隧道
+                选择温泉
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="dropdownMenu2">
@@ -86,8 +86,8 @@
             data: []
         },
         yAxis: {
-            min : 0,
-            max : 0
+            min: 0,
+            max: 0
         },
         series: [
             {
@@ -124,8 +124,8 @@
             data: []
         },
         yAxis: {
-            min : 0,
-            max : 0
+            min: 0,
+            max: 0
         },
         series: [
             {
@@ -149,7 +149,7 @@
         ]
     };
 
-    var option3= {
+    var option3 = {
         color: ['pink'],
         title: {
             text: '掌子面湿度折线图'
@@ -175,8 +175,8 @@
             data: []
         },
         yAxis: {
-            min : 0,
-            max : 0
+            min: 0,
+            max: 0
         },
         series: [
             {
@@ -189,7 +189,7 @@
     };
 
     var option4 = {
-        color: ['green', 'blue'],
+        color: ['red', 'orange'],
         title: {
             text: '掌子面环境温度和wbgt折线图'
         },
@@ -214,8 +214,8 @@
             data: []
         },
         yAxis: {
-            min : 0,
-            max : 0
+            min: 0,
+            max: 0
         },
         series: [
             {
@@ -340,11 +340,21 @@
                         chart3.setOption(option3);
 
                         //更新掌子面环境温度和wbgt折线图
-                        //TODO: 更新表格
+                        option4.xAxis.data = allDate;
+                        option4.series[0].data = tempAverage;
+                        option4.series[1].data = wbgtAverage;
+                        dMin = Math.min.apply(Math, tempAverage);
+                        dMax = Math.max.apply(Math, tempAverage);
+                        eMin = Math.min.apply(Math, wbgtAverage);
+                        eMax = Math.max.apply(Math, wbgtAverage);
+                        option4.yAxis.min = Math.min(dMin, eMin);
+                        option4.yAxis.max = Math.max(eMin, eMax);
+                        chart4.setOption(option4)
                     }
                 });
             }
-        }})
+        }
+    })
 </script>
 </body>
 </html>
