@@ -24,7 +24,7 @@
                 <label for="endTime">结束时间</label>
                 <input class="form-control" id="endTime">
             </div>
-<!--            <button type="button" id="time_btn" class="btn btn-default" style="margin: 20px">确认</button>-->
+            <!--            <button type="button" id="time_btn" class="btn btn-default" style="margin: 20px">确认</button>-->
         </form>
 
         <div class="dropdown" style="margin: 50px">
@@ -248,11 +248,18 @@
         var laydate = layui.laydate;
         var layer = layui.layer
         laydate.render({
-            elem: '#startTime'
+            elem: '#startTime',
+            done: function(value, date, endDate) {
+                getData($("#dropdownMenu1").attr("table"));
+            }
         });
         laydate.render({
-            elem: '#endTime'
+            elem: '#endTime',
+            done: function(value, date, endDate) {
+                getData($("#dropdownMenu1").attr("table"));
+            }
         });
+
 
         $.ajax({
             url: "/hsManage/getAllHotspring",
@@ -262,13 +269,13 @@
                 for (var i in data) {
                     $("#dropdownMenu2").append("<li><a id='" + data[i].tablename + "'>" + data[i].hotspringname + "</a></li>")
                     $('#' + data[i].tablename).on('click', function (object) {
-                        $("#dropdownMenu1").html(object.target.text+" <span class='caret'></span>");
+                        $("#dropdownMenu1").html(object.target.text + " <span class='caret'></span>").attr("table", object.target.id);
                         getData(object.target.id);
                     })
                 }
                 if (data.length) {
                     getData(data[0].tablename);
-                    $("#dropdownMenu1").html(data[0].hotspringname +" <span class='caret'></span>");
+                    $("#dropdownMenu1").html(data[0].hotspringname + " <span class='caret'></span>").attr("table", data[0].tablename);
                 }
             }
         });
