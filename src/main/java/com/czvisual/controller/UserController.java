@@ -247,7 +247,7 @@ public class UserController {
         JSONObject jo = new JSONObject();
         if (subject.isPermitted("user:manageUser") && operateUser.getId() != user.getId()) {
             operateUser = userService.findUserByUserId(user.getId());
-            switch (operateUser.getType()) {
+            switch (user.getType()) {
                 case 0:
                     operateUser.setPosition("系统管理员");
                     break;
