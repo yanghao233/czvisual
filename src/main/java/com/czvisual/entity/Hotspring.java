@@ -69,4 +69,5 @@ public class Hotspring implements Serializable {
     public void setChemicalcompositiontype(String chemicalcompositiontype) {
         this.chemicalcompositiontype = chemicalcompositiontype;
     }
+
 }

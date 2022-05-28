@@ -89,33 +89,71 @@
     <form class="layui-form" lay-filter="dataFrm" id="dataFrm">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">录入时间</label>
+                <label class="layui-form-label">温泉名称</label>
                 <div class="layui-input-inline">
-                    <input type="hidden" name="id">
-                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
-                           autocomplete="off" class="layui-input">
+                    <input type="text" name="hotspringname" id="hotspringname" autocomplete="off"
+                           class="layui-input" lay-verify="required">
                 </div>
             </div>
+        </div>
+        <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">掌子面里程</label>
+                <label class="layui-form-label">数据库表名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmlc" id="zzmlc" lay-verify="number" autocomplete="off"
-                           class="layui-input">
+                    <input type="text" name="tablename" id="tablename" autocomplete="off"
+                           class="layui-input" lay-verify="required">
                 </div>
             </div>
+        </div>
+        <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">掌子面均温</label>
+                <label class="layui-form-label">地域</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmAverage" id="zzmAverage" lay-verify="number" autocomplete="off"
-                           class="layui-input">
+                    <input type="text" name="area" id="area" autocomplete="off"
+                           class="layui-input" lay-verify="required">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">普通类型</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="commontype" id="commontype" autocomplete="off"
+                           class="layui-input" lay-verify="required">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">热展示类型</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="heatdisplaytype" id="heatdisplaytype" autocomplete="off"
+                           class="layui-input" lay-verify="required">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">热害类型</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="heatdamagetype" id="heatdamagetype" autocomplete="off"
+                           class="layui-input" lay-verify="required" >
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">化学成分类型</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="chemicalcompositiontype" id="chemicalcompositiontype" autocomplete="off"
+                           class="layui-input" lay-verify="required">
                 </div>
             </div>
         </div>
 
         <div class="layui-form-item layui-layer-btn layui-layer-btn-c">
             <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
-                    lay-filter="doSubmit" lay-submit>
-                提交
+                    lay-filter="doSubmit" lay-submit>提交
             </button>
             <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
             </button>
@@ -167,7 +205,7 @@
             var params = $("#searchFrm").serialize();
             console.log($("#searchFrm").serialize());
             tableIns.reload({
-                url: "/dataManage/getRealAllData?" + params
+                url: "/hsManage/getFilteredAllHotspring?" + params
             })
         });
 
@@ -175,7 +213,7 @@
         table.on("toolbar(userTable)", function (obj) {
             switch (obj.event) {
                 case 'add':
-                    openAddRecord();
+                    openAddHotSpring();
                     break;
             }
         })
@@ -185,9 +223,9 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
-                onDelRecord(data);
+                onDelHotSpring(data);
             } else if (layEvent === 'edit') { //编辑
-                openUpdateRecord(data);
+                openUpdateHotSpring(data);
             }
         });
 
@@ -195,30 +233,30 @@
         var mainIndex;
 
         //打开添加页面
-        function openAddRecord() {
+        function openAddHotSpring() {
             mainIndex = layer.open({
                 type: 1,
-                title: '添加数据',
+                title: '添加温泉',
                 content: $("#saveOrUpdateDiv"),
-                area: ['1100px', '550px'],
+                area: ['400px', '550px'],
                 success: function (index) {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
-                    url = "/dataManage/addRecord?table=" + $('#searchFrm').serializeArray()[0]['value'];
+                    $("#tablename").removeAttr("readonly");
+                    url = "/hsManage/addHotSpring";
                 }
             });
         }
 
 
-        function onDelRecord(data) {
+        function onDelHotSpring(data) {
             console.log(data);
-            console.log($('#searchFrm').serializeArray());
-            layer.confirm('真的删除这条数据吗', function (index) {
+            layer.confirm('确认删除这个温泉吗', function (index) {
                 //向服务端发送删除指令
                 $.ajax({
-                    url: "/dataManage/delRecord",
+                    url: "/hsManage/delHotSpring",
                     type: "POST",
-                    data: {id: data.id, table: $('#searchFrm').serializeArray()[0]['value']},
+                    data: {tableName:data.tablename},
                     dataType: "json",
                     success: function (result, status, xhr0) {
                         layer.msg(result.message);
@@ -232,17 +270,18 @@
         }
 
         //打开修改页面
-        function openUpdateRecord(data) {
+        function openUpdateHotSpring(data) {
             mainIndex = layer.open({
                 type: 1,
-                title: '修改数据',
+                title: '修改温泉',
                 content: $("#saveOrUpdateDiv"),
-                area: ['1100px', '500px'],
+                area: ['400px', '500px'],
                 success: function (index) {
-                    console.log("openUpdateRecord打开修改页面");
+                    console.log("openUpdateHotSpring打开修改页面");
                     console.log(data);
                     form.val("dataFrm", data);
-                    url = "/dataManage/updateRecord?table=" + $('#searchFrm').serializeArray()[0]['value'];
+                    $("#tablename").attr("readonly","readonly");
+                    url = "/hsManage/updateHotSpring";
                 }
             });
         }

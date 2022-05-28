@@ -5,10 +5,96 @@
 <mapper namespace="com.czvisual.mapper.HotspringMapper">
 
     <select id="findAll" resultType="com.czvisual.entity.Hotspring">
-        select * from hotspring
+        select *
+        from hotspring
     </select>
-    
+
     <select id="findTypeByGroup" resultType="String">
-        select ${groupParam} from hotspring group by ${groupParam}
+        select ${groupParam}
+        from hotspring
+        group by ${groupParam}
     </select>
+
+    <select id="findFilteredAll" resultType="com.czvisual.entity.Hotspring">
+        select * from hotspring
+        <where>
+            <if test="area != null and area != ''">
+                area = #{area}
+            </if>
+            <if test="commonType != null and commonType != ''">
+                and commonType = #{commonType}
+            </if>
+            <if test="heatDisplayType != null and heatDisplayType != ''">
+                and heatDisplayType = #{heatDisplayType}
+            </if>
+            <if test="heatDamageType != null and heatDamageType != ''">
+                and heatDamageType = #{heatDamageType}
+            </if>
+            <if test="chemicalCompositionType != null and chemicalCompositionType != ''">
+                and chemicalCompositionType = #{chemicalCompositionType}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addHotSpring">
+        insert into hotspring (hotSpringName, tableName, area, commonType, heatDisplayType, heatDamageType,
+                               chemicalCompositionType)
+        values (#{hotspringname}, #{tablename}, #{area}, #{commontype}, #{heatdisplaytype}, #{heatdamagetype},
+                #{chemicalcompositiontype});
+    </insert>
+
+    <update id="addHotSpringTable" parameterType="String">
+        CREATE TABLE ${tableName}
+        (
+            id              int(11) NOT NULL AUTO_INCREMENT,
+            date            date NOT NULL COMMENT '日期/时间',
+            zzmlc           decimal(10, 2) NULL DEFAULT NULL COMMENT '掌子面里程',
+            time            varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '测温时间',
+            zzmMiddle       decimal(10, 2) NULL DEFAULT NULL COMMENT '掌子面左边温度',
+            zzmLeft         decimal(10, 2) NULL DEFAULT NULL COMMENT '掌子面中温度',
+            zzmRight        decimal(10, 2) NULL DEFAULT NULL COMMENT '掌子面右边',
+            zzmAverage      decimal(10, 2) NULL DEFAULT NULL COMMENT '掌子面平均温度',
+            zzmWater        decimal(10, 2) NULL DEFAULT NULL,
+            zzmFlowRate     decimal(10, 2) NULL DEFAULT NULL COMMENT '掌子面水流量/m3/h',
+            temp1           decimal(10, 2) NULL DEFAULT NULL COMMENT '环境温度',
+            temp2           decimal(10, 2) NULL DEFAULT NULL,
+            temp3           decimal(10, 2) NULL DEFAULT NULL,
+            tempAverage     decimal(10, 2) NULL DEFAULT NULL,
+            moisture1       decimal(10, 2) NULL DEFAULT NULL COMMENT '掌子面湿度%',
+            moisture2       decimal(10, 2) NULL DEFAULT NULL,
+            moisture3       decimal(10, 2) NULL DEFAULT NULL,
+            moistureAverage decimal(10, 2) NULL DEFAULT NULL,
+            wbgt1           decimal(10, 2) NULL DEFAULT NULL COMMENT 'WBGT指标',
+            wbgt2           decimal(10, 2) NULL DEFAULT NULL,
+            wbgt3           decimal(10, 2) NULL DEFAULT NULL,
+            wbgtAverage     decimal(10, 2) NULL DEFAULT NULL,
+            dkFlowRate      decimal(10, 2) NULL DEFAULT NULL COMMENT '洞内总水流量（洞口）',
+            status          varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+            basis           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '依据',
+            description     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+            depth           decimal(10, 2) NULL DEFAULT NULL COMMENT '掌子面埋深（m)',
+            PRIMARY KEY (id)
+        )
+    </update>
+
+    <update id="updateHotSpring">
+        update hotspring
+        set hotSpringName=#{hotspringname},
+            area = #{area},
+            commonType = #{commontype},
+            heatDisplayType = #{heatdisplaytype},
+            heatDamageType = #{heatdamagetype},
+            chemicalCompositionType = #{chemicalcompositiontype}
+        where tableName = #{tablename}
+    </update>
+    
+    <delete id="delHotSpring">
+        delete from hotspring where tableName = #{tableName}
+    </delete>
+    
+    <update id="delHotSpringTable">
+        drop table ${tableName}
+    </update>
+
+
 </mapper>

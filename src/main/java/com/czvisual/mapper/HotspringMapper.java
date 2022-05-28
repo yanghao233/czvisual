@@ -7,6 +7,17 @@ import java.util.List;
 
 @Mapper
 public interface HotspringMapper {
-    public List<Hotspring> findAll();
-    public List<String> findTypeByGroup(String groupParam);
+    List<Hotspring> findAll();
+    List<String> findTypeByGroup(String groupParam);
+    List<Hotspring> findFilteredAll(String area, String commonType, String heatDisplayType, String heatDamageType, String chemicalCompositionType);
+
+    Integer addHotSpring(Hotspring hotspring);
+
+    Integer addHotSpringTable(String tableName);
+
+    Integer updateHotSpring(Hotspring hotspring);
+
+    Integer delHotSpring(String tableName);
+
+    Integer delHotSpringTable(String tableName);
 }

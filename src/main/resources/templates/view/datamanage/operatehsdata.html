@@ -18,8 +18,9 @@
             <div class="layui-inline">
                 <label class="layui-form-label">选择温泉</label>
                 <div class="layui-input-block">
-                    <select name="table" lay-verify="required" >
-                        <option th:each="hs:${hotstprings}" th:text="${hs.hotspringname}" th:value="${hs.tablename}"></option>
+                    <select name="table" lay-verify="required">
+                        <option th:each="hs:${hotstprings}" th:text="${hs.hotspringname}"
+                                th:value="${hs.tablename}"></option>
                     </select>
                 </div>
             </div>
@@ -40,11 +41,20 @@
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 <div style="display: none;" id="userToolBar">
-    <button type="button" class="layui-btn layui-btn-sm"  lay-event="add">增加</button>
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="add">增加</button>
+    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="excel">从Excel导入</button>
 </div>
 <div id="toolBar" style="display: none;">
     <a th:if="${edit eq 1}" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a th:if="${del eq 1}" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</div>
+
+<div style="display: none" class="layui-upload-drag" id="uploadDiv">
+    <i class="layui-icon"></i>
+    <p>点击上传，或将文件拖拽到此处</p>
+    <div class="layui-hide" id="uploadSuccessView">
+        <hr>
+    </div>
 </div>
 <!-- 数据表格结束 -->
 
@@ -56,139 +66,159 @@
                 <label class="layui-form-label">录入时间</label>
                 <div class="layui-input-inline">
                     <input type="hidden" name="id">
-                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">掌子面里程</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmlc" id="zzmlc" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="zzmlc" id="zzmlc" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">掌子面均温</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmAverage" id="zzmAverage" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="zzmAverage" id="zzmAverage" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label" >掌子面温度(左)</label>
+                <label class="layui-form-label">掌子面温度(左)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmLeft" id="zzmLeft" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="zzmLeft" id="zzmLeft" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">掌子面温度(中)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmMiddle" id="zzmMiddle" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="zzmMiddle" id="zzmMiddle" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">掌子面温度(右)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmRight" id="zzmRight" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="zzmRight" id="zzmRight" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label" >环境温度(左)</label>
+                <label class="layui-form-label">环境温度(左)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="temp1" id="temp1" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="temp1" id="temp1" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">环境温度(中)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="temp2" id="temp2" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="temp2" id="temp2" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">环境温度(右)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="temp3" id="temp3" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="temp3" id="temp3" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label" >水温</label>
+                <label class="layui-form-label">水温</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmWater" id="zzmWater" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="zzmWater" id="zzmWater" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">掌子面水流量</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="zzmFlowRate" id="zzmFlowRate" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="zzmFlowRate" id="zzmFlowRate" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">环境均温</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="tempAverage" id="tempAverage" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="tempAverage" id="tempAverage" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label" >环境湿度(左)</label>
+                <label class="layui-form-label">环境湿度(左)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="moisture1" id="moisture1" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="moisture1" id="moisture1" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">环境湿度(中)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="moisture2" id="moisture2" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="moisture2" id="moisture2" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">环境湿度(右)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="moisture3" id="moisture3" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="moisture3" id="moisture3" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label" >WBGT指标(左)</label>
+                <label class="layui-form-label">WBGT指标(左)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="wbgt1" id="wbgt1" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="wbgt1" id="wbgt1" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">WBGT指标(中)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="wbgt2" id="wbgt2" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="wbgt2" id="wbgt2" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">WBGT指标(右)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="wbgt3" id="wbgt3" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="wbgt3" id="wbgt3" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label" >环境均湿度</label>
+                <label class="layui-form-label">环境均湿度</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="moistureAverage" id="moistureAverage" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="moistureAverage" id="moistureAverage" lay-verify="number"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">WBGT均指标</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="wbgtAverage" id="wbgtAverage" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="wbgtAverage" id="wbgtAverage" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">状态</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="status" id="status"   autocomplete="off" value="/" class="layui-input">
+                    <input type="text" name="status" id="status" autocomplete="off" value="/" class="layui-input">
                 </div>
             </div>
         </div>
@@ -196,7 +226,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">洞内总水流量(洞口)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="dkFlowRate" id="dkFlowRate" lay-verify="number"  autocomplete="off" class="layui-input">
+                    <input type="text" name="dkFlowRate" id="dkFlowRate" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
@@ -208,7 +239,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">掌子面深度</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="depth" id="depth" lay-verify="number" autocomplete="off" class="layui-input">
+                    <input type="text" name="depth" id="depth" lay-verify="number" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
@@ -243,19 +275,20 @@
     var tableIns;
     layui.extend({
         dtree: '/layui_ext/dist/dtree'
-    }).use(['jquery', 'layer', 'form', 'table', 'dtree'], function () {
+    }).use(['jquery', 'layer', 'form', 'table', 'upload'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
         var table = layui.table;
         var laydate = layui.laydate;
+        var upload  = layui.upload;
         laydate.render({
             elem: '#date'
         })
         //渲染数据表格
         tableIns = table.render({
             elem: '#userTable'   //渲染的目标对象
-            , url: '/dataManage/getRealAllData?table='+tablenn //数据接口
+            , url: '/dataManage/getRealAllData?table=' + tablenn //数据接口
             , title: '用户数据表'//数据导出来的标题
             , toolbar: "#userToolBar"   //表格的工具条
             , height: 'full-230'
@@ -264,33 +297,33 @@
             , limits: [10, 20, 30]
             , limit: 10//默认采用3
             , cols: [[   //列表数据
-                {field: 'id',title: 'ID',align: 'center',hide:true},
-                {field:'date', title:'录入时间',align:'center',sort: true}
-                ,{field:'zzmlc', title:'掌子面里程',align:'center',sort: true}
-                ,{field:'zzmMiddle', title:'掌子面温度(中)',align:'center'}
-                ,{field:'zzmLeft', title:'掌子面温度(左)',align:'center'}
-                ,{field:'zzmRight', title:'掌子面温度(右)',align:'center'}
-                ,{field:'zzmAverage', title:'掌子面均温',align:'center'}
-                ,{field:'zzmWater', title:'水温',align:'center'}
-                ,{field:'zzmFlowRate', title:'掌子面水流量',align:'center'}
-                ,{field:'temp1', title:'环境均温(左)',align:'center'}
-                ,{field:'temp2', title:'环境均温(中)',align:'center'}
-                ,{field:'temp3', title:'环境均温(又)',align:'center'}
-                ,{field:'tempAverage', title:'环境均温',align:'center'}
-                ,{field:'moisture1', title:'环境湿度(左)',align:'center'}
-                ,{field:'moisture2', title:'环境湿度(中)',align:'center'}
-                ,{field:'moisture3', title:'环境湿度(右)',align:'center'}
-                ,{field:'moistureAverage', title:'环境均湿度',align:'center'}
-                ,{field:'wbgt1', title:'WBGT指标(左)',align:'center'}
-                ,{field:'wbgt2', title:'WBGT指标(中)',align:'center'}
-                ,{field:'wbgt3', title:'WBGT指标(右)',align:'center'}
-                ,{field:'wbgtAverage', title:'WBGT均指标',align:'center'}
-                ,{field:'dkFlowRate', title:'洞内总水流量(洞口)',align:'center'}
-                ,{field:'status', title:'状态',align:'center'}
-                ,{field:'basis', title:'依据',align:'center'}
-                ,{field:'description', title:'备注',align:'center'}
-                ,{field:'depth', title:'掌子面深度',align:'center'}
-                ,{fixed: 'right', title:'操作', toolbar: '#toolBar',align:'center',width:"10%"}
+                {field: 'id', title: 'ID', align: 'center', hide: true},
+                {field: 'date', title: '录入时间', align: 'center', sort: true}
+                , {field: 'zzmlc', title: '掌子面里程', align: 'center', sort: true}
+                , {field: 'zzmMiddle', title: '掌子面温度(中)', align: 'center'}
+                , {field: 'zzmLeft', title: '掌子面温度(左)', align: 'center'}
+                , {field: 'zzmRight', title: '掌子面温度(右)', align: 'center'}
+                , {field: 'zzmAverage', title: '掌子面均温', align: 'center'}
+                , {field: 'zzmWater', title: '水温', align: 'center'}
+                , {field: 'zzmFlowRate', title: '掌子面水流量', align: 'center'}
+                , {field: 'temp1', title: '环境均温(左)', align: 'center'}
+                , {field: 'temp2', title: '环境均温(中)', align: 'center'}
+                , {field: 'temp3', title: '环境均温(又)', align: 'center'}
+                , {field: 'tempAverage', title: '环境均温', align: 'center'}
+                , {field: 'moisture1', title: '环境湿度(左)', align: 'center'}
+                , {field: 'moisture2', title: '环境湿度(中)', align: 'center'}
+                , {field: 'moisture3', title: '环境湿度(右)', align: 'center'}
+                , {field: 'moistureAverage', title: '环境均湿度', align: 'center'}
+                , {field: 'wbgt1', title: 'WBGT指标(左)', align: 'center'}
+                , {field: 'wbgt2', title: 'WBGT指标(中)', align: 'center'}
+                , {field: 'wbgt3', title: 'WBGT指标(右)', align: 'center'}
+                , {field: 'wbgtAverage', title: 'WBGT均指标', align: 'center'}
+                , {field: 'dkFlowRate', title: '洞内总水流量(洞口)', align: 'center'}
+                , {field: 'status', title: '状态', align: 'center'}
+                , {field: 'basis', title: '依据', align: 'center'}
+                , {field: 'description', title: '备注', align: 'center'}
+                , {field: 'depth', title: '掌子面深度', align: 'center'}
+                , {fixed: 'right', title: '操作', toolbar: '#toolBar', align: 'center', width: "10%"}
             ]]
         })
         //模糊查询
@@ -307,6 +340,9 @@
             switch (obj.event) {
                 case 'add':
                     openAddRecord();
+                    break;
+                case 'excel':
+                    importFromExcel();
                     break;
             }
         })
@@ -335,11 +371,33 @@
                 success: function (index) {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
-                    url = "/dataManage/addRecord?table="+$('#searchFrm').serializeArray()[0]['value'];
+                    url = "/dataManage/addRecord?table=" + $('#searchFrm').serializeArray()[0]['value'];
                 }
             });
         }
 
+        function importFromExcel() {
+            mainIndex = layer.open({
+                type: 1,
+                title: '导入Excel',
+                content: $("#uploadDiv"),
+                // area: ['500px', '550px'],
+                success: function (index) {
+                    //拖拽上传
+                    upload.render({
+                        elem: '#uploadDiv',
+                        accept:'file',
+                        exts:'xlsx',
+                        url: '/dataManage/uploadExcel' //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+                        ,done: function(res){
+                            layer.msg('上传成功');
+                            layui.$('#uploadSuccessView').removeClass('layui-hide').text("上传成功");
+                            console.log(res)
+                        }
+                    });
+                }
+            });
+        }
 
 
         function onDelRecord(data) {
@@ -350,7 +408,7 @@
                 $.ajax({
                     url: "/dataManage/delRecord",
                     type: "POST",
-                    data: {id: data.id,table:$('#searchFrm').serializeArray()[0]['value']},
+                    data: {id: data.id, table: $('#searchFrm').serializeArray()[0]['value']},
                     dataType: "json",
                     success: function (result, status, xhr0) {
                         layer.msg(result.message);
@@ -374,7 +432,7 @@
                     console.log("openUpdateRecord打开修改页面");
                     console.log(data);
                     form.val("dataFrm", data);
-                    url = "/dataManage/updateRecord?table="+$('#searchFrm').serializeArray()[0]['value'];
+                    url = "/dataManage/updateRecord?table=" + $('#searchFrm').serializeArray()[0]['value'];
                 }
             });
         }
