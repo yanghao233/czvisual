@@ -281,7 +281,7 @@
         var form = layui.form;
         var table = layui.table;
         var laydate = layui.laydate;
-        var upload  = layui.upload;
+        var upload = layui.upload;
         laydate.render({
             elem: '#date'
         })
@@ -382,17 +382,18 @@
                 title: '导入Excel',
                 content: $("#uploadDiv"),
                 // area: ['500px', '550px'],
-                success: function (index) {
+                success: function (data) {
                     //拖拽上传
                     upload.render({
                         elem: '#uploadDiv',
-                        accept:'file',
-                        exts:'xlsx',
-                        url: '/dataManage/uploadExcel?table='+$('#searchFrm').serializeArray()[0]['value'] //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
-                        ,done: function(res){
-                            layer.msg('上传成功');
+                        accept: 'file',
+                        exts: 'xlsx',
+                        url: '/dataManage/uploadExcel?table=' + $('#searchFrm').serializeArray()[0]['value'] //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+                        , done: function (res) {
+                            layer.msg(res.message);
                             layui.$('#uploadSuccessView').removeClass('layui-hide').text("上传成功");
-                            console.log(res)
+                            location.reload();
+                            console.log(res);
                         }
                     });
                 }
