@@ -9,11 +9,7 @@
 |          |  温泉数据  | /hsManage/tableview       | 每个温泉的具体数据，将每一天的数据打印出来，可按日期查询，数据包括掌子面里程、掌子面温度等信息、WGBT指标等 |     √      |     √      |      √       |          |
 | 数据管理 |  温泉管理  | /dataManage/hs            |                     新增，修改，删除温泉                     |     √      | √(只能增)  |              |          |
 |          |  数据操作  | /dataManage/operatehsdata | 对具体某一温泉进行数据的录入，一般是按天录入信息，超管可以修改和删除某一条记录，录入员只能新增记录 |     √      | √(只能增)  |              |          |
-| 图表分析 | 掌子面里程 | /chartAnalysis/zzmlc      |              将温泉数据通过echarts绘制成点状图               |  √(下同)   |            |   √(下同)    |          |
-|          | 掌子面温度 | /chartAnalysis/zzmwd      |                                                              |            |            |              |          |
-|          |  环境温度  | /chartAnalysis/hjwd       |                                                              |            |            |              |          |
-|          | 掌子面湿度 | /chartAnalysis/zzmsd      |                                                              |            |            |              |          |
-|          | WBGT 指标  | /chartAnalysis/wbgt       |                                                              |            |            |              |          |
+| 图表分析 | 掌子面里程 | /chartAnalysis/chart      |              将温泉数据通过echarts绘制成点状图               |  √(下同)   |            |   √(下同)    |          |
 | 用户管理 |            | /user/manageUser          |             管理员新增删除修改用户，设置用户分级             |     √      |            |              |          |
 |    ==    |     ==     |                           |                              ==                              |     ==     |     ==     |      ==      |    ==    |
 | 其他页面 |  用户页面  | /user/updateProfile       |            修改当前登录用户的联系方式、密码等信息            |     √      |     √      |      √       |    √     |
