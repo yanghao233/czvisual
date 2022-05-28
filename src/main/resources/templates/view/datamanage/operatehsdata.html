@@ -388,7 +388,7 @@
                         elem: '#uploadDiv',
                         accept:'file',
                         exts:'xlsx',
-                        url: '/dataManage/uploadExcel' //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+                        url: '/dataManage/uploadExcel?table='+$('#searchFrm').serializeArray()[0]['value'] //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
                         ,done: function(res){
                             layer.msg('上传成功');
                             layui.$('#uploadSuccessView').removeClass('layui-hide').text("上传成功");
