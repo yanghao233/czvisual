@@ -60,6 +60,7 @@ public class ShiroConfig {
         filtermap.put("/login", "anon");
         filtermap.put("/register", "anon");
         filtermap.put("/toRegister", "anon");
+        filtermap.put("/user/isNameExist", "anon");
 
         filtermap.put("/css/**", "anon");
         filtermap.put("/layui/**", "anon");
@@ -73,10 +74,8 @@ public class ShiroConfig {
         //filtermap.put("/index*","authc");
         //filtermap.put("/index/test1","anon,roles[gs]");
         //filtermap.put("/index/test2","roles[gs]");
-        filtermap.put("/hsManage/overview","perms[hsManage:overview]");
-        filtermap.put("/hsManage/tableview","perms[hsManage:tableview]");
-        filtermap.put("/dataManage/hs","perms[dataManage:operateHsInfo]");
-        filtermap.put("/dataManage/operatehsdata","perms[dataManage:operateHsData]");
+        filtermap.put("/hsManage/*","perms[hsManage:hs]");
+        filtermap.put("/dataManage/*","perms[dataManage:operateHsData]");
         filtermap.put("/chartAnalysis/*","perms[chartAnalysis]");
         filtermap.put("/user/manageUser","perms[user:manageUser]");
         filtermap.put("/user/updateProfile","perms[user:updateProfile]");
@@ -109,25 +108,6 @@ public class ShiroConfig {
     public ShiroDialect getShiroDialect() {
         return new ShiroDialect();
     }
-
-
-    /*
-    * 如果需要通过注解来授权，就要创建这两个Bean，但是采用Filter就不用
-    * 采用注解进行权限控制太分散
-    * */
-    //@Bean
-    //public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator(){
-    //    DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-    //    advisorAutoProxyCreator.setProxyTargetClass(true);
-    //    return advisorAutoProxyCreator;
-    //}
-    //
-    //@Bean
-    //public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
-    //    AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-    //    authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
-    //    return authorizationAttributeSourceAdvisor;
-    //}
 
 
 

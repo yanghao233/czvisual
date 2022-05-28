@@ -10,7 +10,9 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.RedirectView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,8 +48,8 @@ public class UserController {
     @RequestMapping("toLogin")
     public String toLogin() {
         //测试时用，用于免登录
-        return "redirect:/login?username=1&pwd=1";
-        //return "view/login";
+        //return "redirect:/login?username=1&pwd=1";
+        return "view/login";
     }
 
     @RequestMapping("toRegister")
@@ -84,8 +88,7 @@ public class UserController {
 
 
     @RequestMapping({"register"})
-    @ResponseBody
-    public Object register(User user) {
+    public Object register(User user, Model model) {
         int i1 = userService.checkUser(user);
         if (i1 == 1) {
             return "当前登陆名已存在";
@@ -98,10 +101,12 @@ public class UserController {
             user.setRealname("普通用户");
             user.setPosition("普通用户");
             user.setType(3);
+            user.setSex(2);
             user.setAvailable(1);
             int i = userService.addUser(user);
             if (i > 0) {
-                return "注册成功";
+                model.addAttribute("msg", "注册成功!");
+                return "view/login";
             } else {
                 return "注册失败";
             }
@@ -182,7 +187,7 @@ public class UserController {
 
     @RequestMapping("/user/changePassword")
     @ResponseBody
-    public JSONObject changePassword(@RequestParam(required = true) int id, String pwd, String pwd1) {
+    public Object changePassword(@RequestParam(required = true) int id, String pwd, String pwd1) {
         JSONObject jo = new JSONObject();
         User currentLoginUser = (User) SecurityUtils.getSubject().getPrincipal();
         Subject subject = SecurityUtils.getSubject();
@@ -217,6 +222,9 @@ public class UserController {
             if (i > 0) {
                 jo.put("code", 1);
                 jo.put("message", "修改成功");
+                if(currentLoginUser.getId() == operateUser.getId()){
+                    subject.logout();
+                }
                 sessionService.stopSessionByUserid(id);
                 return jo;
             } else {
@@ -239,7 +247,21 @@ public class UserController {
         JSONObject jo = new JSONObject();
         if (subject.isPermitted("user:manageUser") && operateUser.getId() != user.getId()) {
             operateUser = userService.findUserByUserId(user.getId());
-            operateUser.setPosition(user.getPosition());
+            switch (operateUser.getType()) {
+                case 0:
+                    operateUser.setPosition("系统管理员");
+                    break;
+                case 1:
+                    operateUser.setPosition("数据录入员");
+                    break;
+                case 2:
+                    operateUser.setPosition("数据分析员");
+                    break;
+                case 3:
+                    operateUser.setPosition("普通用户");
+                    break;
+
+            }
             operateUser.setType(user.getType());
             operateUser.setAvailable(user.getAvailable() == null ? 0 : 1);
             operateUser.setUsername(user.getUsername());

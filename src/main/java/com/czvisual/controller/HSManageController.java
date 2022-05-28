@@ -21,27 +21,26 @@ public class HSManageController {
     @Autowired
     HotspringService hotspringService;
 
-    @RequestMapping("overview")
-    public String overview() {
-        return "/view/hsmanage/overview.html";
-    }
-
-    @RequestMapping("tableview")
-    public String tableview() {
-        return "/view/hsmanage/tableview.html";
-    }
-
     @RequestMapping("hs")
     public String hs(Model model) {
-        if (((User) SecurityUtils.getSubject().getPrincipal()).getType() == 0) {
-            model.addAttribute("edit", 1);
-            model.addAttribute("del", 1);
+        int type = ((User) SecurityUtils.getSubject().getPrincipal()).getType();
+        switch (type){
+            case 0:
+                model.addAttribute("edit", 1);
+                model.addAttribute("del", 1);
+                model.addAttribute("add", 1);
+                break;
+            case 1:
+                model.addAttribute("add", 1);
+                break;
         }
-        model.addAttribute("area",hotspringService.findTypeByGroup("area"));
-        model.addAttribute("commonType",hotspringService.findTypeByGroup("commonType"));
-        model.addAttribute("heatDisplayType",hotspringService.findTypeByGroup("heatDisplayType"));
-        model.addAttribute("heatDamageType",hotspringService.findTypeByGroup("heatDamageType"));
-        model.addAttribute("chemicalCompositionType",hotspringService.findTypeByGroup("chemicalCompositionType"));
+
+
+        model.addAttribute("area", hotspringService.findTypeByGroup("area"));
+        model.addAttribute("commonType", hotspringService.findTypeByGroup("commonType"));
+        model.addAttribute("heatDisplayType", hotspringService.findTypeByGroup("heatDisplayType"));
+        model.addAttribute("heatDamageType", hotspringService.findTypeByGroup("heatDamageType"));
+        model.addAttribute("chemicalCompositionType", hotspringService.findTypeByGroup("chemicalCompositionType"));
         return "/view/hsmanage/hsmanage.html";
     }
 
@@ -70,6 +69,51 @@ public class HSManageController {
         }
         jo.put("data", subList);
         jo.put("count", hotspringList.size());
+        return jo;
+    }
+
+    @RequestMapping("addHotSpring")
+    @ResponseBody
+    public Object addHotSpring(Hotspring hotspring) {
+        JSONObject jo = new JSONObject();
+        Integer[] res = hotspringService.addHotSpring(hotspring);
+        if (res[0] > 0 && res[1] == 0) {
+            jo.put("code", 0);
+            jo.put("message", "添加成功");
+        } else {
+            jo.put("code", 1);
+            jo.put("message", "添加失败");
+        }
+        return jo;
+    }
+
+    @RequestMapping("delHotSpring")
+    @ResponseBody
+    public Object delHotSpring(String tableName) {
+        JSONObject jo = new JSONObject();
+        int[] res = hotspringService.delHotSpring(tableName);
+        if (res[0] > 0 && res[1] == 0) {
+            jo.put("code", 0);
+            jo.put("message", "删除成功");
+        } else {
+            jo.put("code", 1);
+            jo.put("message", "删除失败");
+        }
+        return jo;
+    }
+
+    @RequestMapping("updateHotSpring")
+    @ResponseBody
+    public Object updateHotSpring(Hotspring hotspring) {
+        JSONObject jo = new JSONObject();
+        int i = hotspringService.updateHotSpring(hotspring);
+        if (i > 0) {
+            jo.put("code", 0);
+            jo.put("message", "更新成功");
+        } else {
+            jo.put("code", 1);
+            jo.put("message", "更新失败");
+        }
         return jo;
     }
 

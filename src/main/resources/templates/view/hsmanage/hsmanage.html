@@ -76,7 +76,7 @@
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 <div style="display: none;" id="userToolBar">
-    <button type="button" class="layui-btn layui-btn-sm" lay-event="add">增加</button>
+    <button th:if="${add eq 1}" type="button" class="layui-btn layui-btn-sm" lay-event="add">增加</button>
 </div>
 <div id="toolBar" style="display: none;">
     <a th:if="${edit eq 1}" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>

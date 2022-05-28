@@ -61,9 +61,7 @@ public class UserRealm extends AuthorizingRealm {
             switch (current.getType()) {
                 case 0:
                     roles.add("superAdmin");
-                    permissions.add("hsManage:overview");
-                    permissions.add("hsManage:tableview");
-                    permissions.add("dataManage:operateHsInfo");
+                    permissions.add("hsManage:hs");
                     permissions.add("dataManage:operateHsData");
                     permissions.add("chartAnalysis");
                     permissions.add("user:manageUser");
@@ -71,23 +69,20 @@ public class UserRealm extends AuthorizingRealm {
                     break;
                 case 1:
                     roles.add("recorder");
-                    permissions.add("hsManage:overview");
-                    permissions.add("hsManage:tableview");
-                    permissions.add("dataManage:operateHsInfo");
+                    permissions.add("hsManage:hs");
                     permissions.add("dataManage:operateHsData");
                     permissions.add("user:updateProfile");
                     break;
                 case 2:
                     roles.add("analyst");
-                    permissions.add("hsManage:overview");
-                    permissions.add("hsManage:tableview");
+                    permissions.add("hsManage:hs");
+                    permissions.add("dataManage:operateHsData");
                     permissions.add("chartAnalysis");
-                    permissions.add("user:manageUser");
                     permissions.add("user:updateProfile");
                     break;
                 case 3:
                     roles.add("normalUser");
-                    permissions.add("hsManage:overview");
+                    permissions.add("hsManage:hs");
                     permissions.add("user:updateProfile");
                     break;
 

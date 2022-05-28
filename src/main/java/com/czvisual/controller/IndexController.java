@@ -77,7 +77,17 @@ public class IndexController {
     @RequestMapping("/initTreeNode")
     public String initTreeNode() {
         //测试临时用
-        return "[{\"id\":2,\"title\":\"温泉管理\",\"icon\":\"\uE653\",\"href\":\"/hsManage/hs\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":3,\"title\":\"数据管理\",\"icon\":\"\uE663\",\"href\":\"/dataManage/operatehsdata\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":4,\"title\":\"图表分析\",\"icon\":\"\uE716\",\"href\":\"/chartAnalysis/chart\",\"spread\":false,\"target\":\"\",\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":5,\"title\":\"用户管理\",\"icon\":\"\uE629\",\"href\":\"/user/manageUser\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1}]";
+        switch (((User)SecurityUtils.getSubject().getPrincipal()).getType()){
+            case 0:
+                return "[{\"id\":2,\"title\":\"温泉管理\",\"icon\":\"\uE653\",\"href\":\"/hsManage/hs\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":3,\"title\":\"数据管理\",\"icon\":\"\uE663\",\"href\":\"/dataManage/operatehsdata\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":4,\"title\":\"图表分析\",\"icon\":\"\uE716\",\"href\":\"/chartAnalysis/chart\",\"spread\":false,\"target\":\"\",\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":5,\"title\":\"用户管理\",\"icon\":\"\uE629\",\"href\":\"/user/manageUser\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1}]";
+            case 1:
+                return "[{\"id\":2,\"title\":\"温泉管理\",\"icon\":\"\\uE653\",\"href\":\"/hsManage/hs\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":3,\"title\":\"数据管理\",\"icon\":\"\\uE663\",\"href\":\"/dataManage/operatehsdata\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1}]";
+            case 2:
+                return "[{\"id\":2,\"title\":\"温泉管理\",\"icon\":\"\\uE653\",\"href\":\"/hsManage/hs\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":3,\"title\":\"数据管理\",\"icon\":\"\\uE663\",\"href\":\"/dataManage/operatehsdata\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1},{\"id\":4,\"title\":\"图表分析\",\"icon\":\"\\uE716\",\"href\":\"/chartAnalysis/chart\",\"spread\":false,\"target\":\"\",\"children\":[],\"checkArr\":\"0\",\"parentId\":1}]";
+            case 3:
+                return "[{\"id\":2,\"title\":\"温泉管理\",\"icon\":\"\\uE653\",\"href\":\"/hsManage/hs\",\"spread\":false,\"target\":null,\"children\":[],\"checkArr\":\"0\",\"parentId\":1}]";
+        }
+        return null;
     }
 
 
